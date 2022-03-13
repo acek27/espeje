@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Rekening\SubkegiatanController;
+use App\Http\Controllers\Rekening\UraianControllerraian;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,14 +13,13 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/dashboard', function () {
-    return view('layouts.master');
-});
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('dashboard');
 });
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::resource('subkegiatan', Subkegiatan::class);
+Route::resource('uraian', UraianController::class);
