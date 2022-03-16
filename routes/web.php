@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Rekening\SubkegiatanController;
-use App\Http\Controllers\Rekening\UraianControllerraian;
+use App\Http\Controllers\Rekening\UraianController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,4 +23,5 @@ Auth::routes();
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/subkegiatan/data', [SubkegiatanController::class, 'anyData'])->name('subkegiatan.data');
 Route::resource('subkegiatan', SubkegiatanController::class);
+Route::get('/uraian/data', [UraianController::class, 'anyData'])->name('uraian.data');
 Route::resource('uraian', UraianController::class);

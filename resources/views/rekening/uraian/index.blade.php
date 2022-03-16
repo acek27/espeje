@@ -38,8 +38,10 @@
             <table id="kegiatan" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Kode Sub Kegiatan</th>
                     <th>Kode Rekening</th>
-                    <th>Nama Sub Kegiatan</th>
+                    <th>Nama Uraiann</th>
+                    <th>Jumlah Anggaran</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -74,11 +76,13 @@
             var dt = $('#kegiatan').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '{{route('subkegiatan.data')}}',
+                ajax: '{{route('uraian.data')}}',
                 columns: [
-                    {data: 'kode_rek', name: 'kode_rek'},
-                    {data: 'nama_sub', name: 'nama_sub'},
-                    {data: 'status', name: 'status'},
+                    {data: 'sub_id', name: 'sub_id', orderable: false, align: 'center'},
+                    {data: 'kode_rek', name: 'kode_rek', orderable: false, align: 'center'},
+                    {data: 'nama_uraian', name: 'nama_uraian'},
+                    {data: 'anggaran', name: 'anggaran', orderable: false, searchable: false, align: 'center'},
+                    {data: 'status', name: 'status', orderable: false, searchable: false, align: 'center'},
                     {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},
                 ],
             });
@@ -86,7 +90,7 @@
             $('body').on('click', '.hapus-data', function () {
                 let id = $(this).attr('data-id');
                 $.ajax({
-                    url: "{{route('subkegiatan.index')}}/" + id,
+                    url: "{{route('uraian.index')}}/" + id,
                     method: "DELETE",
                 }).done(function (msg) {
                     Toast.fire({
