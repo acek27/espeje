@@ -3,83 +3,42 @@
 namespace App\Http\Controllers\Rekening;
 
 use App\Http\Controllers\Controller;
+use App\Models\Subkegiatan;
+use App\Traits\Resource;
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
 
 class SubkegiatanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    use Resource;
+
+    protected $model = Subkegiatan::class;
+    protected $view = 'rekening.subkegiatan';
+    protected $route = 'subkegiatan';
+
+    public function __construct()
     {
-        //
+//        $this->middleware('auth')->except(['notification']);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function anyData()
     {
-        //
+        return DataTables::of($this->model::query())
+            ->addColumn('status', function ($data) {
+                $a = '';
+                if ($data->status == 1) {
+                    $a = 'Aktif';
+                } else {
+                    $a = 'Nonaktif';
+                }
+                return $a;
+            })
+            ->addColumn('action', function ($data) {
+                $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
+                $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
+                return $edit . '&nbsp' . $del;
+            })
+            ->make(true);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -21,5 +21,6 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::resource('subkegiatan', Subkegiatan::class);
+Route::get('/subkegiatan/data', [SubkegiatanController::class, 'anyData'])->name('subkegiatan.data');
+Route::resource('subkegiatan', SubkegiatanController::class);
 Route::resource('uraian', UraianController::class);

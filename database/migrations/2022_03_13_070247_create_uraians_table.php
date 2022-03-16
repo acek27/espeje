@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('jumlah',12);
             $table->tinyInteger('status');
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }
 

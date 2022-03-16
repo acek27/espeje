@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->text('nama_sub');
             $table->tinyInteger('status');
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }
 
