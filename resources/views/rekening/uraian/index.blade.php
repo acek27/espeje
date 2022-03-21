@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Rekening | Sub Kegiatan
+    Rekening | Uraian Kegiatan
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endpush
 @section('header')
-    Sub Kegiatan
+    Uraian Kegiatan
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="#">Rekening</a></li>
-    <li class="breadcrumb-item active">Sub Kegiatan</li>
+    <li class="breadcrumb-item active">Uraian kegiatan</li>
 @endsection
 @section('content')
     <!-- Info boxes -->
@@ -33,8 +33,8 @@
         @endif
         <div class="card-header">
             <h3 class="card-title">Tabel Sub Kegiatan</h3>
-            <a href="{{route('subkegiatan.create')}}" style="float: right" class="btn btn-primary">
-                <i class="fas fa-plus mr-1"> </i> Input Sub kegiatan
+            <a href="{{route('uraian.create')}}" style="float: right" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"> </i> Input Uraian Kegiatan
             </a>
         </div>
         <!-- /.card-header -->
@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </div>
-            <table id="kegiatan" class="table table-bordered table-striped">
+            <table id="uraian" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                     <th>Kode Sub Kegiatan</th>
@@ -94,7 +94,7 @@
                 timer: 3000
             });
 
-            var dt = $('#kegiatan').DataTable({
+            var dt = $('#uraian').DataTable({
                 processing: true,
                 serverSide: true,
                 ajax: '{{route('uraian.data')}}',
@@ -128,7 +128,11 @@
             });
             $('#sub').change(function () {
                 var id = $(this).val();
+                if (id === ""){
+                dt.ajax.url('{{route('uraian.data')}}').load();
+                }else{
                 dt.ajax.url('{{url('uraian/filter')}}' + '/' + id).load();
+                }
             });
         });
 

@@ -23,6 +23,19 @@ class UraianController extends Controller
         return view($this->view . '.index', compact('sub'));
     }
 
+    public function create()
+    {
+        $sub = Subkegiatan::where('status',1)->pluck('nama_sub','kode_rek');
+        return view($this->view . '.create', compact('sub'));
+    }
+
+    public function store(Request $request)
+    {
+        $this->validate($request, $this->model::$rulesCreate);
+        $this->model::create($request->all());
+        return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
+    }
+
     public function anyData()
     {
         return DataTables::of($this->model::query())
