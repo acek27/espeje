@@ -24,4 +24,5 @@ Auth::routes();
 Route::get('/subkegiatan/data', [SubkegiatanController::class, 'anyData'])->name('subkegiatan.data');
 Route::resource('subkegiatan', SubkegiatanController::class);
 Route::get('/uraian/data', [UraianController::class, 'anyData'])->name('uraian.data');
+Route::get('/uraian/filter/{kode_rek}', [UraianController::class, 'filter'])->name('uraian.filter');
 Route::resource('uraian', UraianController::class);

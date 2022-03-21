@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{{asset('assest/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <!-- Select2 -->
+
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endpush
 @section('header')
     Sub Kegiatan
@@ -35,6 +39,18 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Filter berdasarkan sub kegiatan</label>
+                        {{ Form::select('sub', $sub,"",[
+                                     'class'=>'form-control select2',
+                                     'placeholder'=>'-- Pilih Sub Kegiatan --',
+                                     'id' => 'sub'
+                                 ]) }}
+                    </div>
+                </div>
+            </div>
             <table id="kegiatan" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -64,7 +80,12 @@
     <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
     <!-- SweetAlert2 -->
     <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
+    <!-- Select2 -->
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
     <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
         $(document).ready(function () {
             var Toast = Swal.mixin({
                 toast: true,
@@ -105,7 +126,12 @@
                 });
                 dt.ajax.reload();
             });
+            $('#sub').change(function () {
+                var id = $(this).val();
+                dt.ajax.url('{{url('uraian/filter')}}' + '/' + id).load();
+            });
         });
+
 
     </script>
 @endpush
