@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Sub Kegiatan | Data Baru
+    Sub Kegiatan | Edit Data
 @endsection
 @push('css')
 

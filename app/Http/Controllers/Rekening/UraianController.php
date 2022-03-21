@@ -29,11 +29,11 @@ class UraianController extends Controller
         return view($this->view . '.create', compact('sub'));
     }
 
-    public function store(Request $request)
+    public function edit($id)
     {
-        $this->validate($request, $this->model::$rulesCreate);
-        $this->model::create($request->all());
-        return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
+        $data = $this->model::find($id);
+        $sub = Subkegiatan::where('status',1)->pluck('nama_sub','kode_rek');
+        return view($this->view . '.edit', compact('data','sub'));
     }
 
     public function anyData()

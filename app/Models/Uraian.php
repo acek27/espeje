@@ -25,7 +25,7 @@ class Uraian extends Model
         'status' => 'required'
     ];
 
-    public static function rulesEdit(Subkegiatan $data)
+    public static function rulesEdit(Uraian $data)
     {
         return [
             'kode_rek' => 'required|max:25',

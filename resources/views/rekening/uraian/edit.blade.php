@@ -1,15 +1,16 @@
 @extends('layouts.master')
 @section('title')
-    Sub Kegiatan | Data Baru
+    Uraian Kegiatan | Edit Data
 @endsection
 @push('css')
-
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2/css/select2.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 @endpush
 @section('header')
-    Edit Sub Kegiatan
+    Edit Uraian Kegiatan
 @endsection
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="#">Sub Kegiatan</a></li>
+    <li class="breadcrumb-item"><a href="#">Uraian Kegiatan</a></li>
     <li class="breadcrumb-item active">Edit Data</li>
 @endsection
 @section('content')
@@ -18,8 +19,8 @@
             <div class="card custom-card">
                 <div class="card-body">
                     <div>
-                        <h6 class="main-content-label mb-1">Form Data Sub Kegiatan</h6>
-                        <p class="text-muted card-sub-title">Pengisian form edit sub kegiatan.</p>
+                        <h6 class="main-content-label mb-1">Form Data Uraian Kegiatan</h6>
+                        <p class="text-muted card-sub-title">Pengisian form edit uraian kegiatan.</p>
                     </div>
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible">
@@ -32,8 +33,8 @@
                             </ul>
                         </div>
                     @endif
-                    {!! Form::model($data, ['url'=>route('subkegiatan.update',$data->id), 'files' => true, 'method'=>'put']) !!}
-                    @include('rekening.subkegiatan._form')
+                    {!! Form::model($data, ['url'=>route('uraian.update',$data->id), 'files' => true, 'method'=>'put']) !!}
+                    @include('rekening.uraian._form')
                     {!! Form::submit('Simpan', [
                             'class'=>'btn ripple btn-primary',
                             'id' => 'save'
@@ -46,5 +47,10 @@
 
 @endsection
 @push('script')
-
+    <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
+    <script>
+        $('.select2').select2({
+            theme: 'bootstrap4'
+        })
+    </script>
 @endpush
