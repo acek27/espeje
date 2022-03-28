@@ -13,15 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('uraians', function (Blueprint $table) {
+        Schema::create('revisis', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_rek',25)->unique();
-            $table->string('sub_id',25);
-            $table->foreign('sub_id')->references('kode_rek')
-                ->on('subkegiatans')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('nama_uraian');
-            $table->string('jumlah',12);
-            $table->tinyInteger('status');
+            $table->bigInteger('spj_id')->unsigned();
+            $table->foreign('spj_id')->references('id')
+                ->on('spjs')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
@@ -34,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('uraians');
+        Schema::dropIfExists('revisis');
     }
 };

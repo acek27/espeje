@@ -42,4 +42,9 @@ class Uraian extends Model
             set: fn ($value) => ucfirst($value),
         );
     }
+
+    public function subkegiatan()
+    {
+        return $this->belongsTo(Subkegiatan::class, 'sub_id', 'kode_rek');
+    }
 }

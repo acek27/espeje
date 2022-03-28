@@ -15,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('spjs', function (Blueprint $table) {
             $table->id();
+            $table->string('uraian_id',25);
+            $table->foreign('uraian_id')->references('kode_rek')
+                ->on('uraians')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('jumlah',25);
             $table->timestamps();
+            $table->softDeletes($column = 'deleted_at', $precision = 0);
         });
     }
 

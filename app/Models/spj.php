@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class spj extends Model
 {
-    use HasFactory;
+    public function uraian()
+    {
+        return $this->belongsTo(Uraian::class, 'uraian_id', 'kode_rek');
+    }
 }
