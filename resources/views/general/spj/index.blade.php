@@ -1,6 +1,6 @@
 @extends('layouts.master')
 @section('title')
-    Rekening | Sub Kegiatan
+    SPJ | Data SPJ
 @endsection
 @push('css')
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endpush
 @section('header')
-    Sub Kegiatan
+    Data SPJ
 @endsection
 @section('breadcrumb')
-    <li class="breadcrumb-item"><a href="#">Rekening</a></li>
-    <li class="breadcrumb-item active">Sub Kegiatan</li>
+    <li class="breadcrumb-item"><a href="#">SPJ</a></li>
+    <li class="breadcrumb-item active">Data SPJ</li>
 @endsection
 @section('content')
     <!-- Info boxes -->
@@ -28,9 +28,9 @@
             </div>
         @endif
         <div class="card-header">
-            <h3 class="card-title">Tabel Sub Kegiatan</h3>
-            <a href="{{route('subkegiatan.create')}}" style="float: right" class="btn btn-primary">
-                <i class="fas fa-plus mr-1"> </i> Input Sub kegiatan
+            <h3 class="card-title">Tabel SPJ</h3>
+            <a href="{{route('spj.create')}}" style="float: right" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"> </i> Ajukan SPJ Baru
             </a>
         </div>
         <!-- /.card-header -->

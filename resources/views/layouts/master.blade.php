@@ -227,7 +227,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <li class="nav-item">
                                 <a href="{{route('spj.create')}}" class="nav-link">
                                     <i class="far fa-circle nav-icon"></i>
-                                    <p>Input SPJ</p>
+                                    <p>Pengajuan SPJ</p>
                                 </a>
                             </li>
                             <li class="nav-item">

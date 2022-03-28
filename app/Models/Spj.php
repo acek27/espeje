@@ -10,4 +10,21 @@ class Spj extends Model
 {
     use SoftDeletes;
     protected $guarded = [];
+    protected $attributes = [
+        'status' => 1
+    ];
+
+    public static $rulesCreate = [
+        'uraian_id' => 'required',
+        'jumlah' => 'numeric|required',
+    ];
+
+    public static function rulesEdit(Spj $data)
+    {
+        return [
+            'uraian_id' => 'required',
+            'jumlah' => 'numeric|required',
+        ];
+    }
+
 }
