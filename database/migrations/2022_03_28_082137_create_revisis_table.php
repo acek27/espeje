@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('spj_id')->unsigned();
             $table->foreign('spj_id')->references('id')
                 ->on('spjs')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('keterangan')->nullable();
+            $table->tinyInteger('status');
             $table->timestamps();
             $table->softDeletes($column = 'deleted_at', $precision = 0);
         });

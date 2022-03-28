@@ -35,11 +35,13 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-            <table id="kegiatan" class="table table-bordered table-striped">
+            <table id="" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                    <th>Kode Rekening</th>
-                    <th>Nama Sub Kegiatan</th>
+                    <th>Sub Kegiatan</th>
+                    <th>Uraian</th>
+                    <th>Anggaran</th>
+                    <th>Jumlah</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -63,45 +65,45 @@
     <!-- SweetAlert2 -->
     <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script>
-        $(document).ready(function () {
-            var Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
+        {{--$(document).ready(function () {--}}
+        {{--    var Toast = Swal.mixin({--}}
+        {{--        toast: true,--}}
+        {{--        position: 'top-end',--}}
+        {{--        showConfirmButton: false,--}}
+        {{--        timer: 3000--}}
+        {{--    });--}}
 
-            var dt = $('#kegiatan').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '{{route('subkegiatan.data')}}',
-                columns: [
-                    {data: 'kode_rek', name: 'kode_rek'},
-                    {data: 'nama_sub', name: 'nama_sub'},
-                    {data: 'status', name: 'status'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},
-                ],
-            });
+        {{--    var dt = $('#kegiatan').DataTable({--}}
+        {{--        processing: true,--}}
+        {{--        serverSide: true,--}}
+        {{--        ajax: '{{route('subkegiatan.data')}}',--}}
+        {{--        columns: [--}}
+        {{--            {data: 'kode_rek', name: 'kode_rek'},--}}
+        {{--            {data: 'nama_sub', name: 'nama_sub'},--}}
+        {{--            {data: 'status', name: 'status'},--}}
+        {{--            {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},--}}
+        {{--        ],--}}
+        {{--    });--}}
 
-            $('body').on('click', '.hapus-data', function () {
-                let id = $(this).attr('data-id');
-                $.ajax({
-                    url: "{{route('subkegiatan.index')}}/" + id,
-                    method: "DELETE",
-                }).done(function (msg) {
-                    Toast.fire({
-                        icon: 'success',
-                        title: 'Data berhasil dihapus.'
-                    })
-                }).fail(function (textStatus) {
-                    Toast.fire({
-                        icon: 'error',
-                        title: 'Gagal menghapus data.'
-                    })
-                });
-                dt.ajax.reload();
-            });
-        });
+        {{--    $('body').on('click', '.hapus-data', function () {--}}
+        {{--        let id = $(this).attr('data-id');--}}
+        {{--        $.ajax({--}}
+        {{--            url: "{{route('subkegiatan.index')}}/" + id,--}}
+        {{--            method: "DELETE",--}}
+        {{--        }).done(function (msg) {--}}
+        {{--            Toast.fire({--}}
+        {{--                icon: 'success',--}}
+        {{--                title: 'Data berhasil dihapus.'--}}
+        {{--            })--}}
+        {{--        }).fail(function (textStatus) {--}}
+        {{--            Toast.fire({--}}
+        {{--                icon: 'error',--}}
+        {{--                title: 'Gagal menghapus data.'--}}
+        {{--            })--}}
+        {{--        });--}}
+        {{--        dt.ajax.reload();--}}
+        {{--    });--}}
+        {{--});--}}
 
     </script>
 @endpush

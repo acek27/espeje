@@ -215,14 +215,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-th"></i>
+                    <li class="nav-item menu-open">
+                        <a href="#" class="nav-link active">
+                            <i class="nav-icon fas fa-tachometer-alt"></i>
                             <p>
-                                Simple Link
-                                <span class="right badge badge-danger">New</span>
+                                SPJ
+                                <i class="right fas fa-angle-left"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a href="{{route('spj.create')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Input SPJ</p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{route('spj.index')}}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Data SPJ</p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
