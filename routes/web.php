@@ -28,4 +28,5 @@ Route::get('/uraian/data', [UraianController::class, 'anyData'])->name('uraian.d
 Route::get('/uraian/filter/{kode_rek}', [UraianController::class, 'filter'])->name('uraian.filter');
 Route::resource('/uraian', UraianController::class);
 Route::post('/spj/listuraian/{id}', [SpjController::class, 'listuraian'])->name('spj.uraian');
+Route::get('/spj/data', [SpjController::class, 'anyData'])->name('spj.data');
 Route::resource('/spj', SpjController::class);

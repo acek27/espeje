@@ -9,9 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Spj extends Model
 {
     use SoftDeletes;
-    protected $fillable = ['uraian_id','jumlah','status'];
+
+    protected $fillable = ['uraian_id', 'jumlah', 'status'];
+    protected $with = ['uraian'];
     protected $attributes = [
-        'status' => 1
+        'status' => 0
     ];
 
     public static $rulesCreate = [
@@ -27,4 +29,8 @@ class Spj extends Model
         ];
     }
 
+    public function uraian()
+    {
+        return $this->belongsTo(Uraian::class, 'uraian_id', 'kode_rek');
+    }
 }
