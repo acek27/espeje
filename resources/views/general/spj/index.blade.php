@@ -41,6 +41,7 @@
                     <th>Kode Rekening</th>
                     <th>Uraian Kegiatan</th>
                     <th>Jumlah</th>
+                    <th>Progres</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -80,6 +81,7 @@
                     {data: 'uraian_id', name: 'uraian_id'},
                     {data: 'uraian.nama_uraian', name: 'uraian.nama_uraian'},
                     {data: 'jumlah', name: 'jumlah', orderable: false, searchable: false, align: 'center'},
+                    {data: 'progress', name: 'jumlah', orderable: false, searchable: false, align: 'progress'},
                     {data: 'status', name: 'status', orderable: false, searchable: false, align: 'center'},
                     {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},
                 ],

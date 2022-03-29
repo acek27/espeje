@@ -28,11 +28,12 @@ class SpjController extends Controller
         $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
         return view($this->view . '.create', compact('sub'));
     }
+
     public function edit($id)
     {
         $data = $this->model::find($id);
         $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
-        return view($this->view . '.edit', compact('sub','data'));
+        return view($this->view . '.edit', compact('sub', 'data'));
     }
 
     public function listuraian(Request $request, $id)
@@ -45,25 +46,59 @@ class SpjController extends Controller
     public function anyData()
     {
         return DataTables::of($this->model::query())
+            ->addColumn('progress', function ($data) {
+                $progress = 0;
+                $bar = '';
+                if ($data->status == 0) {
+                    $progress;
+                    $bar= 'bg-danger';
+                } elseif ($data->status == 1) {
+                    $progress = 25;
+                    $bar= 'bg-danger';
+                } elseif ($data->status == 2) {
+                    $progress = 50;
+                    $bar= 'bg-orange';
+                } elseif ($data->status == 3) {
+                    $progress = 75;
+                    $bar= 'bg-warning';
+                } else {
+                    $progress = 100;
+                    $bar= 'bg-success';
+                }
+                $result = '<div data-toggle="tooltip" title="' . $progress . '" class="progress-group"><strong>' . number_format($progress, 0, '.', '') . '%</strong>
+                            Complete<div class="progress progress-sm">
+                                <div class="progress-bar ' . $bar . '"
+                                     style="width: ' . $progress . '%"></div>
+                            </div>
+                            <!-- /.progress-group -->
+                        </div>';
+                return $result;
+            })
             ->addColumn('status', function ($data) {
                 $a = '';
-                if ($data->status == 1) {
-                    $a = 'Proses pengajuan';
+                if ($data->status == 0) {
+                   $a = 'Diajukan';
+                } elseif ($data->status == 1) {
+                    $a = 'Revisi';
+                } elseif ($data->status == 2) {
+                    $a = 'Disetujui PU';
+                } elseif ($data->status == 3) {
+                    $a = 'Disetujui LS/GU';
                 } else {
-                    $a = 'Disetujui';
+                    $a = 'Selesai';
                 }
                 return $a;
             })
             ->addColumn('jumlah', function ($data) {
 
-                return 'Rp. '. number_format($data->jumlah,0,',','.');
+                return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
             })
-
             ->addColumn('action', function ($data) {
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
                 return $edit . '&nbsp' . $del;
             })
+            ->rawColumns(['action', 'progress'])
             ->make(true);
     }
 }
