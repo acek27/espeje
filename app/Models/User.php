@@ -19,6 +19,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'hp',
         'email',
         'password',
         'username'
@@ -42,4 +43,39 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $appends = ['all_roles'];
+
+    public function isHasRole($role)
+    {
+        foreach ($this->roles as $r) {
+            if ($role == $r->name)
+                return true;
+        }
+        return false;
+    }
+
+    public function getAllRolesAttribute()
+    {
+        $a = "";
+        foreach ($this->roles as $role) {
+            $a .= $role->name . ", ";
+        }
+        return ($a == "") ? "" : substr($a, 0, strlen($a) - 2);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function hasRole($name)
+    {
+        foreach ($this->roles as $role) {
+            if ($role->name == $name)
+                return true;
+        }
+        return false;
+    }
+
 }
