@@ -16,12 +16,12 @@ use App\Http\Controllers\General\SpjController;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('welcome');
 });
 
 Auth::routes();
 
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/subkegiatan/data', [SubkegiatanController::class, 'anyData'])->name('subkegiatan.data');
 Route::resource('subkegiatan', SubkegiatanController::class);
 Route::get('/uraian/data', [UraianController::class, 'anyData'])->name('uraian.data');
