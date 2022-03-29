@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Spj extends Model
 {
     use SoftDeletes;
-    protected $guarded = [];
+    protected $fillable = ['uraian_id','jumlah','status'];
     protected $attributes = [
         'status' => 1
     ];

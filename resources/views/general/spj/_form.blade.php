@@ -5,13 +5,31 @@
         <div class="input-group-prepend">
             <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
         </div>
-        {{ Form::select('uraian_id', $uraian,"",[
+        {{ Form::select('sub', $sub,"",[
                                    'class'=>'form-control select2',
-                                   'placeholder'=>'-- Pilih uraian kegiatan --',
-                                   'id' => 'uraian_id'
+                                   'placeholder'=>'-- Pilih Sub Kegiatan --',
+                                   'id' => 'sub',
+                                   'required' => 'required'
                                ]) }}
         @if ($errors->any())
-            {!! $errors->first('uraian_id', '<p style="font-size: 12px; color:red">ERROR! input No. Rekening harus Berupa Angka.</p>') !!}
+            {!! $errors->first('sub', '<p style="font-size: 12px; color:red">ERROR! Pilih sub kegiatan dengan benar.</p>') !!}
+        @endif
+    </div>
+    <!-- /.input group -->
+</div>
+
+<div class="form-group">
+    {{ Form::label('uraian_id', 'Uraian Kegiatan') }}
+
+    <div class="input-group">
+        <div class="input-group-prepend">
+            <span class="input-group-text"><i class="fas fa-list-alt"></i></span>
+        </div>
+        <select class="form-control select2" id="uraian" name="uraian_id" required>
+            <option>-- Pilih Uraian --</option>
+        </select>
+        @if ($errors->any())
+            {!! $errors->first('uraian_id', '<p style="font-size: 12px; color:red">ERROR! Pilih uraian kegiatan dengan benar.</p>') !!}
         @endif
     </div>
     <!-- /.input group -->

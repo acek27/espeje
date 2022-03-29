@@ -49,8 +49,34 @@
 @push('script')
     <script src="{{asset('assets/plugins/select2/js/select2.full.min.js')}}"></script>
     <script>
-        $('.select2').select2({
-            theme: 'bootstrap4'
-        })
+        $(document).ready(function () {
+            $('#sub').change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: "/spj/listuraian/" + id,
+                    method: "POST",
+                    data: {id: id},
+                    async: true,
+                    dataType: 'json',
+                    success: function (data) {
+                        var html = '<option selected>-- Pilih Kegiatan -- </option>';
+                        if (id === "") {
+                            $('#uraian').html(html);
+                        } else {
+                            var i;
+                            for (i = 0; i < data.length; i++) {
+                                html += '<option value=' + data[i].kode_rek + '>' + data[i].nama_uraian + '</option>';
+                                $('#uraian').html(html);
+                            }
+                        }
+                        console.log(data);
+                    }
+                });
+                return false;
+            });
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            });
+        });
     </script>
 @endpush
