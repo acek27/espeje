@@ -17,14 +17,24 @@
         <div class="col-12">
             <div class="callout callout-info">
                 <h5><i class="fas fa-info"></i> Note:</h5>
-                Segala bentuk revisi dilakukan di luar sistem. Ajukan kembali apabila dokumen telah dilakukan perbaikan melalui sistem Sipeje.
+                Segala bentuk revisi dilakukan di luar sistem. Ajukan kembali apabila dokumen telah dilakukan perbaikan
+                melalui sistem Sipeje.
             </div>
 
             <!-- Main content -->
             <div class="invoice p-3 mb-3">
+
                 <!-- title row -->
                 <div class="row">
+
                     <div class="col-12">
+                        @if (session('status'))
+                            <div class="alert alert-success alert-dismissible">
+                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                                <h5><i class="icon fas fa-check"></i> Berhasil!</h5>
+                                {{ session('status') }}
+                            </div>
+                        @endif
                         <h4>
                             <i class="fas fa-book"></i> Rincian SPJ
                             <small class="float-right">Tanggal
@@ -57,9 +67,8 @@
                     <!-- /.col -->
                     <div class="col-sm-4 invoice-col">
                         <b>TPP</b><br>
-                        <b>Nama:</b> 4F3S8J<br>
-                        <b>Kontak:</b> 2/22/2014<br>
-                        <b>Bidang:</b> 968-34567
+                        <b>Nama:</b> Putri<br>
+                        <b>Kontak:</b> 089384108<br>
                     </div>
                     <!-- /.col -->
                 </div>
@@ -79,13 +88,33 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Terjadi kesalahan penandatanganan</td>
-                                <td>Proses perbaikan</td>
-                                <td>Putri</td>
-                                <td>-</td>
-                            </tr>
+                            @php($no = 1)
+                            @foreach($data->revisi as $datum)
+                                <tr>
+                                    <td>{{$no}}</td>
+                                    <td>{{$datum->keterangan}}</td>
+                                    <td>{{$datum->state}}</td>
+                                    <td>{{$datum->validator->name}}</td>
+                                    <td>
+                                        @if($datum->status <2)
+                                            {!! Form::model($datum, ['url'=>route('revisi.update',$datum->id), 'method'=>'put']) !!}
+                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">
+                                                @if($datum->status == 0)
+                                                    <input type="hidden" name="status" value="1">
+                                                    <i class="fas fa-edit"></i> Ajukan perbaikan
+                                                @elseif($datum->status == 1)
+                                                    <input type="hidden" name="status" value="2">
+                                                    <i class="fas fa-edit"></i> Verifikasi
+                                                @endif
+                                            </button>
+                                            {!! Form::close() !!}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
+                                </tr>
+                                @php($no++)
+                            @endforeach
                             </tbody>
                         </table>
                     </div>

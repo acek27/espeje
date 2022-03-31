@@ -11,7 +11,7 @@ class Spj extends Model
     use SoftDeletes;
 
     protected $fillable = ['uraian_id', 'jumlah', 'status'];
-    protected $with = ['uraian'];
+    protected $with = ['uraian', 'revisi'];
     protected $attributes = [
         'status' => 0
     ];
@@ -32,5 +32,10 @@ class Spj extends Model
     public function uraian()
     {
         return $this->belongsTo(Uraian::class, 'uraian_id', 'kode_rek');
+    }
+
+    public function revisi()
+    {
+        return $this->hasMany(Revisi::class, 'spj_id', 'id');
     }
 }
