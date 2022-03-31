@@ -10,6 +10,7 @@ class Uraian extends Model
 {
     use SoftDeletes;
 
+    protected $with = ['subkegiatan'];
     protected $fillable = [
         'kode_rek',
         'sub_id',
@@ -39,7 +40,7 @@ class Uraian extends Model
     protected function namaUraian(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => ucfirst($value),
+            set: fn($value) => ucfirst($value),
         );
     }
 

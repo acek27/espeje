@@ -94,9 +94,10 @@ class SpjController extends Controller
                 return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
             })
             ->addColumn('action', function ($data) {
+                $view = '<a href="' . route($this->route . '.show', $data->id) . '"><i class="fa fa-search text-info"></i></a>';
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
-                return $edit . '&nbsp' . $del;
+                return $view . '&nbsp' .'&nbsp' .$edit . '&nbsp' . '&nbsp' . $del;
             })
             ->rawColumns(['action', 'progress'])
             ->make(true);
