@@ -8,6 +8,7 @@ use App\Models\Subkegiatan;
 use App\Models\Uraian;
 use App\Traits\Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class SpjController extends Controller
@@ -34,6 +35,14 @@ class SpjController extends Controller
         $data = $this->model::find($id);
         $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
         return view($this->view . '.edit', compact('sub', 'data'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->request->add(['pptk_id' => Auth::user()->id]);
+        $this->validate($request, $this->model::$rulesCreate);
+        $this->model::create($request->all());
+        return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
     }
 
     public function listuraian(Request $request, $id)

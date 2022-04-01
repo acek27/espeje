@@ -55,7 +55,7 @@ trait Resource
      */
     public function show($id)
     {
-        $data = $this->model::find($id);
+        $data = $this->model::findOrFail($id);
         return view($this->view . '.show', compact('data'));
     }
 

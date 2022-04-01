@@ -16,6 +16,20 @@ class Revisi extends Model
     protected $attributes = ['status' => 0];
     protected $appends = ['state'];
 
+    public static $rulesCreate = [
+        'keterangan' => 'required',
+        'tanggal_submit' => 'nullable'
+    ];
+
+    public static function rulesEdit(Revisi $data)
+    {
+        return [
+            'keterangan' => 'required',
+            'tanggal_submit' => 'nullable'
+        ];
+    }
+
+
     public function getStateAttribute()
     {
         $status = "";

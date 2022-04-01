@@ -66,24 +66,27 @@
                     </div>
                     <!-- /.col -->
                     <div class="col-sm-4 invoice-col">
-                        <b>TPP</b><br>
-                        <b>Nama:</b> Putri<br>
-                        <b>Kontak:</b> 089384108<br>
+                        <b>PPTK</b><br>
+                        <b>Nama:</b> {{$data->pptk->name}}<br>
+                        <b>Kontak:</b> {{$data->pptk->hp}}<br>
                     </div>
                     <!-- /.col -->
+
                 </div>
                 <!-- /.row -->
-
+                <hr>
                 <!-- Table row -->
                 <div class="row">
                     <div class="col-12 table-responsive">
+                        <h3 class="card-title"><strong>Tabel Revisi</strong></h3>
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Revisi</th>
+                                <th>Keterangan</th>
                                 <th>Status</th>
-                                <th>Validator</th>
+                                <th>Validator (PU)</th>
+                                <th>Validator (LS/GU)</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
@@ -96,6 +99,13 @@
                                     <td>{{$datum->state}}</td>
                                     <td>{{$datum->validator->name}}</td>
                                     <td>
+                                        @if($datum->status == 0)
+                                            {!! Form::model($datum, ['url'=>route('revisi.destroy',$datum->id), 'method'=>'delete']) !!}
+                                            <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
+                                                <i class="fas fa-trash"></i> Hapus
+                                            </button>
+                                            {!! Form::close() !!}
+                                        @endif
                                         @if($datum->status <2)
                                             {!! Form::model($datum, ['url'=>route('revisi.update',$datum->id), 'method'=>'put']) !!}
                                             <button type="submit" class="btn btn-primary" style="margin-right: 5px;">
@@ -137,9 +147,12 @@
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                     <div class="col-12">
+                        <a href="invoice-print.html" rel="noopener" class="btn btn-default"><i
+                                class="fas fa-upload"></i> Upload</a>
                         <button type="button" class="btn btn-success float-right"><i class="fa fa-check"></i> Selesai
                         </button>
-                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                data-toggle="modal" data-target="#add-revisi">
                             <i class="fas fa-edit"></i> Revisi
                         </button>
                     </div>
@@ -147,6 +160,42 @@
             </div>
             <!-- /.invoice -->
         </div><!-- /.col -->
+    </div>
+
+    <div class="modal fade" id="add-revisi">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Masukkan keterangan revisi</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {!! Form::open(['url'=>route('revisi.store')]) !!}
+                <div class="modal-body">
+                    <div class="form-group">
+                        {{ Form::label('keterangan', 'Keterangan') }}
+                        <input type="hidden" name="spj_id" value="{{$data->id}}">
+                        <div class="input-group">
+                            {{ Form::textarea('keterangan',null,[
+                                'class'=>'form-control',
+                                'id' => 'keterangan',
+                                'rows' => 4,
+                                'required' => 'required'
+                            ]) }}
+                        </div>
+                        <!-- /.input group -->
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+                {!! Form::close() !!}
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
     </div>
 @endsection
 @push('script')
