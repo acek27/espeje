@@ -35,7 +35,7 @@ class PermissionController extends Controller
         return view($this->view . '.show', compact('data', 'roles'));
     }
 
-    public function destroy($id, Request $request)
+    public function delete($id, Request $request)
     {
         $data = $this->model::findOrFail($id);
         $data->roles()->detach($request->role_id);

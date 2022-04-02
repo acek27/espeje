@@ -140,7 +140,7 @@
                                                 @endif
                                             </div>
                                             <div class="timeline-footer">
-                                                {!! Form::open(['url'=>route('permission.destroy',[$data->id]),'method'=>'delete']) !!}
+                                                {!! Form::open(['url'=>route('permission.delete',[$data->id]),'method'=>'delete']) !!}
                                                 <input type="hidden" name="role_id" value="{{$role->id}}">
                                                 {!! Form::submit('Hapus', [
                                                            'class'=>'btn btn-danger btn-sm',

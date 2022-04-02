@@ -5,7 +5,9 @@
 @push('css')
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
     <link rel="stylesheet" href="{{asset('assets/plugins/datatables-responsive/css/responsive.bootstrap4.min.css')}}">
-    <link rel="stylesheet" href="{{asset('assest/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">
+{{--    <link rel="stylesheet" href="{{asset('assest/plugins/datatables-buttons/css/buttons.bootstrap4.min.css')}}">--}}
+    <!-- SweetAlert2 -->
+    <link rel="stylesheet" href="{{asset('assets/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endpush
 @section('header')
     Permission
@@ -156,8 +158,16 @@
     <script src="{{asset('assets/plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
     <script src="{{asset('assets/plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
     <script src="{{asset('assets/plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <!-- SweetAlert2 -->
+    <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
     <script>
         $(document).ready(function () {
+            var Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
             var dt = $('#myTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -170,35 +180,24 @@
                     {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},
                 ],
             });
-            var del = function (id) {
-                swal({
-                    title: "Apakah anda yakin?",
-                    text: "Anda tidak dapat mengembalikan data yang sudah terhapus!",
-                    type: "warning",
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Iya!",
-                    cancelButtonText: "Tidak!",
-                }).then(
-                    function (result) {
-                        $.ajax({
-                            url: "{{route('permission.index')}}/" + id,
-                            method: "DELETE",
-                        }).done(function (msg) {
-                            dt.ajax.reload();
-                            swal("Deleted!", "Data sudah terhapus.", "success");
-                        }).fail(function (textStatus) {
-                            alert("Request failed: " + textStatus);
-                        });
-                    }, function (dismiss) {
-                        // dismiss can be 'cancel', 'overlay', 'esc' or 'timer'
-                        swal("Cancelled", "Data batal dihapus", "error");
-                    });
-            };
             $('body').on('click', '.hapus-data', function () {
-                del($(this).attr('data-id'));
+                let id = $(this).attr('data-id');
+                $.ajax({
+                    url: "{{route('permission.index')}}/" + id,
+                    method: "DELETE",
+                }).done(function (msg) {
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Data berhasil dihapus.'
+                    })
+                }).fail(function (textStatus) {
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Gagal menghapus data.'
+                    })
+                });
+                dt.ajax.reload();
             });
-            //aksesutama
         });
     </script>
 @endpush
