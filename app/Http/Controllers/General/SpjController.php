@@ -21,7 +21,7 @@ class SpjController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('auth')->except(['notification']);
+        $this->middleware('auth');
     }
 
     public function create()
@@ -91,9 +91,13 @@ class SpjController extends Controller
                 $view = '<a href="' . route($this->route . '.show', $data->id) . '"><i class="fa fa-search text-info"></i></a>';
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
-                return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
+                if (Auth::user()->can('CRUD SPJ')) {
+                    return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
+                } elseif (Auth::user()->can('Validasi Pertama') || Auth::user()->can('Validasi Lanjutan')) {
+                    return $view;
+                }
             })
-            ->rawColumns(['action','progress'])
+            ->rawColumns(['action', 'progress'])
             ->make(true);
     }
 }

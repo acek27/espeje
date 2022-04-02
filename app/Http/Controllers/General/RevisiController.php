@@ -17,6 +17,15 @@ class RevisiController extends Controller
     protected $view = 'general.spj';
     protected $route = 'revisi';
 
+    public function __construct()
+    {
+        $this->middleware([
+            'can:CRUD SPJ',
+            'can:Validasi Pertama',
+            'can:Validasi Lanjutan'
+        ])->except(['update']);
+    }
+
     public function store(Request $request)
     {
         $this->validate($request, $this->model::$rulesCreate);
