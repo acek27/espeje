@@ -60,19 +60,19 @@ class SpjController extends Controller
                 $bar = '';
                 if ($data->status == 0) {
                     $progress;
-                    $bar= 'bg-danger';
+                    $bar = 'bg-danger';
                 } elseif ($data->status == 1) {
                     $progress = 25;
-                    $bar= 'bg-danger';
+                    $bar = 'bg-danger';
                 } elseif ($data->status == 2) {
                     $progress = 50;
-                    $bar= 'bg-orange';
+                    $bar = 'bg-orange';
                 } elseif ($data->status == 3) {
                     $progress = 75;
-                    $bar= 'bg-warning';
+                    $bar = 'bg-warning';
                 } else {
                     $progress = 100;
-                    $bar= 'bg-success';
+                    $bar = 'bg-success';
                 }
                 $result = '<div data-toggle="tooltip" title="' . $progress . '" class="progress-group"><strong>' . number_format($progress, 0, '.', '') . '%</strong>
                             Complete<div class="progress progress-sm">
@@ -83,21 +83,6 @@ class SpjController extends Controller
                         </div>';
                 return $result;
             })
-            ->addColumn('status', function ($data) {
-                $a = '';
-                if ($data->status == 0) {
-                   $a = 'Diajukan';
-                } elseif ($data->status == 1) {
-                    $a = 'Revisi';
-                } elseif ($data->status == 2) {
-                    $a = 'Disetujui PU';
-                } elseif ($data->status == 3) {
-                    $a = 'Disetujui LS/GU';
-                } else {
-                    $a = 'Selesai';
-                }
-                return $a;
-            })
             ->addColumn('jumlah', function ($data) {
 
                 return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
@@ -106,9 +91,9 @@ class SpjController extends Controller
                 $view = '<a href="' . route($this->route . '.show', $data->id) . '"><i class="fa fa-search text-info"></i></a>';
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
-                return $view . '&nbsp' .'&nbsp' .$edit . '&nbsp' . '&nbsp' . $del;
+                return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
             })
-            ->rawColumns(['action', 'progress'])
+            ->rawColumns(['action','progress'])
             ->make(true);
     }
 }

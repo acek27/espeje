@@ -12,6 +12,7 @@ class Spj extends Model
 
     protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status'];
     protected $with = ['uraian', 'revisi','pptk'];
+    protected $appends = ['state'];
     protected $attributes = [
         'status' => 0
     ];
@@ -27,6 +28,23 @@ class Spj extends Model
             'uraian_id' => 'required',
             'jumlah' => 'numeric|required',
         ];
+    }
+
+    public function getStateAttribute()
+    {
+        $a = '';
+        if ($this->status == 0) {
+            $a = 'Diajukan';
+        } elseif ($this->status == 1) {
+            $a = 'Revisi';
+        } elseif ($this->status == 2) {
+            $a = 'Disetujui PU';
+        } elseif ($this->status == 3) {
+            $a = 'Disetujui LS/GU';
+        } else {
+            $a = 'Selesai';
+        }
+        return $a;
     }
 
     public function uraian()

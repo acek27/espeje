@@ -78,15 +78,14 @@
                 <!-- Table row -->
                 <div class="row">
                     <div class="col-12 table-responsive">
-                        <h3 class="card-title"><strong>Tabel Revisi</strong></h3>
+                        <h3 class="card-title"><strong>Progres SPJ - {{$data->state}}</strong></h3>
                         <table class="table table-striped">
                             <thead>
                             <tr>
                                 <th>No</th>
                                 <th>Keterangan</th>
                                 <th>Status</th>
-                                <th>Validator (PU)</th>
-                                <th>Validator (LS/GU)</th>
+                                <th>Validator</th>
                                 <th>Action</th>
                             </tr>
                             </thead>

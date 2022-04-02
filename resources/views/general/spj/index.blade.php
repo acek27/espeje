@@ -82,7 +82,7 @@
                     {data: 'uraian.nama_uraian', name: 'uraian.nama_uraian'},
                     {data: 'jumlah', name: 'jumlah', orderable: false, searchable: false, align: 'center'},
                     {data: 'progress', name: 'jumlah', orderable: false, searchable: false, align: 'progress'},
-                    {data: 'status', name: 'status', orderable: false, searchable: false, align: 'center'},
+                    {data: 'state', name: 'state', orderable: false, searchable: false, align: 'center'},
                     {data: 'action', name: 'action', orderable: false, searchable: false, align: 'center'},
                 ],
             });
