@@ -5,6 +5,8 @@ use App\Http\Controllers\Rekening\SubkegiatanController;
 use App\Http\Controllers\Rekening\UraianController;
 use App\Http\Controllers\General\SpjController;
 use App\Http\Controllers\General\RevisiController;
+use App\Http\Controllers\PermissionController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,6 +23,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+//Permission
+Route::get('/permission/data', [PermissionController::class, 'anyData'])->name('permission.anydata');
+Route::resource('permission', PermissionController::class);
 //Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

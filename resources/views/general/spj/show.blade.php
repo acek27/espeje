@@ -78,7 +78,7 @@
                 <!-- Table row -->
                 <div class="row">
                     <div class="col-12 table-responsive">
-                        <h3 class="card-title"><strong>Progres SPJ - {{$data->state}}</strong></h3>
+                        <h3 class="card-title"><strong>Tabel Revisi dan Perbaikan</strong></h3>
                         <table class="table table-striped">
                             <thead>
                             <tr>
@@ -131,7 +131,7 @@
                 </div>
                 <!-- /.row -->
 
-                <div class="row">
+                <div class="row mt-3">
                     <!-- accepted payments column -->
                     <div class="col-6">
                         <p class="lead">Lampiran:</p>
@@ -139,6 +139,30 @@
                         <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                             Berikut ini adalah file dokumen yang dapat diunduh.
                         </p>
+                    </div>
+                    <div class="col-6">
+                        <p class="lead">Keterangan lain:</p>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tbody><tr>
+                                    <th style="width:50%">Anggaran</th>
+                                    <td>: Rp {{number_format($data->uraian->jumlah, 0, ',', '.')}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Anggaran SPJ</th>
+                                    <td>: Rp {{number_format($data->jumlah, 0, ',', '.')}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Sisa Anggaran:</th>
+                                    <td>: Rp {{number_format($data->uraian->jumlah -$data->jumlah, 0, ',', '.')}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tahapan Pengajuan:</th>
+                                    <td>: <strong>{{$data->state}}</strong></td>
+                                </tr>
+                                </tbody></table>
+                        </div>
                     </div>
                 </div>
                 <!-- /.row -->
