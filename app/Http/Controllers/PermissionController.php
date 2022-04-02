@@ -18,7 +18,7 @@ class PermissionController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('auth')->except(['notification']);
+        $this->middleware('can:Superuser');
     }
 
     public function store(Request $request)

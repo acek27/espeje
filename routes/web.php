@@ -26,7 +26,7 @@ Auth::routes();
 
 //Permission
 Route::get('/permission/data', [PermissionController::class, 'anyData'])->name('permission.anydata');
-Route::delete('/permission/{$id}/delete', [PermissionController::class, 'delete'])->name('permission.delete');
+Route::delete('/permission/{id}/delete', [PermissionController::class, 'delete'])->name('permission.delete');
 Route::resource('permission', PermissionController::class);
 //Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

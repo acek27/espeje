@@ -18,7 +18,7 @@ class SubkegiatanController extends Controller
 
     public function __construct()
     {
-//        $this->middleware('auth')->except(['notification']);
+        $this->middleware('can:CRUD Rekening');
     }
 
     public function anyData()

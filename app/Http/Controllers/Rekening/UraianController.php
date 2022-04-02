@@ -17,23 +17,28 @@ class UraianController extends Controller
     protected $view = 'rekening.uraian';
     protected $route = 'uraian';
 
+    public function __construct()
+    {
+        $this->middleware('can:CRUD Rekening');
+    }
+
     public function index()
     {
-        $sub = Subkegiatan::where('status',1)->pluck('nama_sub','kode_rek');
+        $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
         return view($this->view . '.index', compact('sub'));
     }
 
     public function create()
     {
-        $sub = Subkegiatan::where('status',1)->pluck('nama_sub','kode_rek');
+        $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
         return view($this->view . '.create', compact('sub'));
     }
 
     public function edit($id)
     {
         $data = $this->model::find($id);
-        $sub = Subkegiatan::where('status',1)->pluck('nama_sub','kode_rek');
-        return view($this->view . '.edit', compact('data','sub'));
+        $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
+        return view($this->view . '.edit', compact('data', 'sub'));
     }
 
     public function anyData()
@@ -50,9 +55,8 @@ class UraianController extends Controller
             })
             ->addColumn('anggaran', function ($data) {
 
-                return 'Rp. '. number_format($data->jumlah,0,',','.');
+                return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
             })
-
             ->addColumn('action', function ($data) {
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
@@ -61,7 +65,8 @@ class UraianController extends Controller
             ->make(true);
     }
 
-    public function filter ($kode_rek){
+    public function filter($kode_rek)
+    {
         return DataTables::of($this->model::where('sub_id', $kode_rek))
             ->addColumn('status', function ($data) {
                 $a = '';
@@ -74,9 +79,8 @@ class UraianController extends Controller
             })
             ->addColumn('anggaran', function ($data) {
 
-                return 'Rp. '. number_format($data->jumlah,0,',','.');
+                return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
             })
-
             ->addColumn('action', function ($data) {
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';

@@ -59,58 +59,6 @@
                         <li class="small"><span class="fa-li"><i class="fas fa-lg fa-home"></i></span>
                             <p>Melihat Dashboard</p></li>
                     </ul>
-                    <hr>
-                    <strong><i class="fas fa-users mr-1"></i> Admin OPD</strong>
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-pen"></i></span>
-                            <p>Mengisi Data Asesmen Aplikasi</p></li>
-                    </ul>
-                    <hr>
-                    <strong><i class="fas fa-network-wired mr-1"></i>Prog/Net/KI</strong>
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clipboard-list"></i></span>
-                            <p>Mengelola Laporan Penugasan</p></li>
-                    </ul>
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-list-alt"></i></span>
-                            <p>Mengelola Laporan NOC</p></li>
-                    </ul>
-                    <hr>
-
-                    <strong><i class="fas fa-desktop mr-1"></i>Multimedia</strong>
-
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-clipboard-list"></i></span>
-                            <p>Mengelola Laporan Penugasan</p></li>
-                    </ul>
-                    <hr>
-
-                    <strong><i class="fas fa-server mr-1"></i>Admin Server dan Aplikasi</strong>
-
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-cloud-download-alt"></i></span>
-                            <p>Mengelola Data Server</p></li>
-                    </ul>
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-mobile-alt"></i></span>
-                            <p>Mengelola Data Aplikasi</p></li>
-                    </ul>
-                    <hr>
-
-                    <strong><i class="fas fa-user-secret mr-1"></i>Petugas Jadwal NOC</strong>
-
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-calendar-alt"></i></span>
-                            <p>Mengelola Jadwal Piket NOC</p></li>
-                    </ul>
-                    <hr>
-
-                    <strong><i class="fas fa-file-text mr-1"></i>Asesmen Aplikasi</strong>
-
-                    <ul class="ml-6 mt-2 fa-ul text-muted">
-                        <li class="small"><span class="fa-li"><i class="fas fa-lg fa-copy"></i></span>
-                            <p>Mengelola Data Asesmen Aplikasi</p></li>
-                    </ul>
                 </div>
                 <!-- /.card-body -->
             </div>
