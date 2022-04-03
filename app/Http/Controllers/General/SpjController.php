@@ -24,6 +24,14 @@ class SpjController extends Controller
         $this->middleware('auth');
     }
 
+    public function index()
+    {
+        $month = date('m');
+        $start = date('Y') . '-' . ($month - 1) . '-21';
+        $end = date('Y') . '-' . $month . '-20';
+        $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
+        return view($this->view . '.index', compact('data'));
+    }
 
     public function create()
     {
@@ -40,7 +48,7 @@ class SpjController extends Controller
 
     public function store(Request $request)
     {
-        $request->request->add(['pptk_id' => Auth::user()->id, 'bidang_id'=>Auth::user()->role_id]);
+        $request->request->add(['pptk_id' => Auth::user()->id, 'bidang_id' => Auth::user()->role_id]);
         $this->validate($request, $this->model::$rulesCreate);
         $this->model::create($request->all());
         return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
@@ -62,7 +70,13 @@ class SpjController extends Controller
 
     public function anyData()
     {
-        return DataTables::of($this->model::where('bidang_id', Auth::user()->role_id))
+        if (Auth::user()->can('CRUD SPJ')) {
+            $query = $this->model::where('bidang_id', Auth::user()->role_id);
+        } else {
+            $query = $this->model::query();
+
+        }
+        return DataTables::of($query)
             ->addColumn('progress', function ($data) {
                 $progress = 0;
                 $bar = '';

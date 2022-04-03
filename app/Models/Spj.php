@@ -43,7 +43,7 @@ class Spj extends Model
             $a = 'Disetujui PU';
         } elseif ($this->status == 3) {
             $a = 'Disetujui LS/GU';
-        } else {
+        } elseif ($this->status == 4) {
             $a = 'Selesai';
         }
         return $a;

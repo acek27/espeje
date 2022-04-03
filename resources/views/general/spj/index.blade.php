@@ -17,9 +17,78 @@
     <li class="breadcrumb-item active">Data SPJ</li>
 @endsection
 @section('content')
+    @php($total= $data->count() )
+    @php($selesai = $data->where('status', 4)->count())
+    @php($belum = $data->where('status', '!=',4)->count())
     <!-- Info boxes -->
+    <div class="row">
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{$total}}<sup style="font-size: 20px"> SPJ</sup>
+                    </h3>
 
-    <div class="card">
+                    <p>Total diajukan</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-code"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{$selesai}}<sup style="font-size: 20px"> SPJ</sup>
+                    </h3>
+                    <p>Selesai</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-sitemap"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+        <div class="col-lg-4 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger ">
+                <div class="inner">
+                    <h3>{{$belum}}<sup style="font-size: 20px"> SPJ</sup>
+                    </h3>
+
+                    <p>Belum Selesai</p>
+                </div>
+                <div class="icon">
+                    <i class="fa fa-image"></i>
+                </div>
+                <a href="#" class="small-box-footer">More info <i
+                        class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <div class="row">
+        <div class="col-lg-11">
+            <div class="progress">
+                <div class="progress-bar bg-primary progress-bar-striped" role="progressbar"
+                     aria-valuenow="{{$selesai == 0 ? '0' : $selesai/$total*100}}"
+                     aria-valuemin="0" aria-valuemax="100"
+                     style="width: {{$selesai == 0 ? '0' : $selesai/$total*100}}%">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1">
+            <p><strong>{{$selesai == 0 ? '0' : $selesai/$total*100}}%</strong></p>
+        </div>
+    </div>
+
+    <div class="card mt-3">
         @if (session('status'))
             <div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
