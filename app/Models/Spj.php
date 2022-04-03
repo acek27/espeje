@@ -12,7 +12,7 @@ class Spj extends Model
     use SoftDeletes;
 
     protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status', 'jenis', 'bidang_id'];
-    protected $with = ['uraian', 'revisi', 'pptk'];
+    protected $with = ['uraian', 'revisi', 'pptk', 'document'];
     protected $appends = ['state'];
     protected $attributes = [
         'status' => 0,
@@ -73,5 +73,10 @@ class Spj extends Model
     public function revisi()
     {
         return $this->hasMany(Revisi::class, 'spj_id', 'id');
+    }
+
+    public function document()
+    {
+        return $this->hasMany(Document::class, 'spj_id', 'id');
     }
 }

@@ -151,6 +151,10 @@
                         <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                             Berikut ini adalah file dokumen yang dapat diunduh.
                         </p>
+                        @foreach($data->document as $doc)
+                            <a href="{{route('spj.file',$doc->id)}}"><i class="fa fa-download text-info"></i> {{$doc->nama_dokumen}}</a>
+                            <br>
+                        @endforeach
                     </div>
                     <div class="col-6">
                         <p class="lead">Keterangan lain:</p>
@@ -207,8 +211,18 @@
                 <div class="row no-print">
                     <div class="col-12">
                         @can('CRUD SPJ')
-                            <a href="invoice-print.html" rel="noopener" class="btn btn-default"><i
-                                    class="fas fa-upload"></i> Upload</a>
+                            @if($data->status == 3)
+                                {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'method'=>'put']) !!}
+                                <input type="hidden" name="status" value="4">
+                                <button type="submit" class="btn btn-success float-right"
+                                        style="margin-right: 5px;">
+                                    <i class="fas fa-edit"></i> Selesai
+                                </button>
+                                {!! Form::close() !!}
+                                <a href="{{route('spj.upload', $data->id)}}" target="_blank" rel="noopener"
+                                   class="btn btn-default"><i
+                                        class="fas fa-upload"></i> Upload</a>
+                            @endif
                         @endcan
                         @can('Validasi Pertama')
                             @if($data->revisi->where('status', '!=', 2)->count() == 0)

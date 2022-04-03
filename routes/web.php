@@ -44,8 +44,14 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/spj/listuraian/{id}', [SpjController::class, 'listuraian'])->name('spj.uraian');
     Route::put('/spj/jenis/{id}', [SpjController::class, 'jenis'])->name('spj.jenis');
     Route::get('/spj/data', [SpjController::class, 'anyData'])->name('spj.data');
+    //upload
+    Route::get('/spj/upload/{document}', [SpjController::class, 'upload'])->name('spj.upload');
+    Route::post('/spj/upload/{document}', [SpjController::class, 'storeDoc'])->name('spj.storeDoc');
+    Route::get('/spj/laporan/file/{document}', [SpjController::class, 'file'])->name('spj.file');
+    Route::post('/spj/upload/', [SpjController::class, 'deleteDoc'])->name('spj.deleteDoc');
     Route::resource('/spj', SpjController::class);
 
+    Route::post('/laportugas/upload/', 'Assignment\Tenagatik\LaportugasController@deleteDocument')->name('laportugas.deleteDoc');
 //Revisi
     Route::resource('/revisi', RevisiController::class);
 });

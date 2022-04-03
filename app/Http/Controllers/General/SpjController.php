@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
+use App\Models\Document;
 use App\Models\Spj;
 use App\Models\Subkegiatan;
 use App\Models\Uraian;
@@ -134,4 +135,60 @@ class SpjController extends Controller
             ->rawColumns(['action', 'progress'])
             ->make(true);
     }
+
+    //upload
+    public function upload($id)
+    {
+        $data = Spj::findOrFail($id);
+        return view($this->view . '.fileUpload', compact('data'));
+    }
+
+    public function storeDoc($id, Request $request)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $this->validate($request, [
+                'file' => 'mimes:pdf,jpeg,jpg,png|file|max:10240'
+            ]);
+            $completeFileName = $file->getClientOriginalName();
+            $fileNameOnly = pathinfo($completeFileName, PATHINFO_FILENAME);
+            $extension = $file->getClientOriginalExtension();
+            $filename = uniqid() . '-' . uniqid() . '.' . $extension;
+            $path = $file->storeAs('docTugas/' . Auth::user()->username . '/', $filename);
+            Document::create([
+                'nama_dokumen' => $completeFileName,
+                'path' => $path,
+                'spj_id' => $id
+            ]);
+        }
+        echo $path;
+        die;
+    }
+
+    public function deleteDoc(Request $request)
+    {
+        if ($request->id != 'undefined') {
+            $id = $request->id;
+            $data = Document::where('path', $id)->first();
+            $file = storage_path('app/' . $data->path);
+            unlink($file);
+            Document::where('path', $id)->delete();
+        }
+    }
+
+    public function file($id)
+    {
+        $poster = Document::find($id);
+        if (empty($poster->path)) {
+            return redirect()->back();
+        }
+        $file = storage_path('app/' . $poster->path);
+
+        $headers = array(
+            'Content-Type: application/pdf',
+        );
+
+        return response()->download($file, $poster->nama_dokumen, $headers);
+    }
+
 }
