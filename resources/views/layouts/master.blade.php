@@ -157,7 +157,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </ul>
                         </li>
                     @endcan
-                    @canany(['Validasi Pertama','Validasi Lanjutan'])
+                    @canany(['Validasi Pertama','Validasi Lanjutan','View SPJ'])
                         <li class="nav-item menu-open">
                             <a href="#" class="nav-link active">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>

@@ -24,6 +24,7 @@ class SpjController extends Controller
         $this->middleware('auth');
     }
 
+
     public function create()
     {
         $sub = Subkegiatan::where('status', 1)->pluck('nama_sub', 'kode_rek');
@@ -39,7 +40,7 @@ class SpjController extends Controller
 
     public function store(Request $request)
     {
-        $request->request->add(['pptk_id' => Auth::user()->id]);
+        $request->request->add(['pptk_id' => Auth::user()->id, 'bidang_id'=>Auth::user()->role_id]);
         $this->validate($request, $this->model::$rulesCreate);
         $this->model::create($request->all());
         return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
@@ -61,7 +62,7 @@ class SpjController extends Controller
 
     public function anyData()
     {
-        return DataTables::of($this->model::query())
+        return DataTables::of($this->model::where('bidang_id', Auth::user()->role_id))
             ->addColumn('progress', function ($data) {
                 $progress = 0;
                 $bar = '';
@@ -100,7 +101,7 @@ class SpjController extends Controller
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
                 if (Auth::user()->can('CRUD SPJ')) {
                     return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
-                } elseif (Auth::user()->can('Validasi Pertama') || Auth::user()->can('Validasi Lanjutan')) {
+                } elseif (Auth::user()->can('Validasi Pertama') || Auth::user()->can('Validasi Lanjutan') || Auth::user()->can('View SPJ')) {
                     return $view;
                 }
             })
