@@ -42,6 +42,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 //SPJ
     Route::post('/spj/listuraian/{id}', [SpjController::class, 'listuraian'])->name('spj.uraian');
+    Route::put('/spj/jenis/{id}', [SpjController::class, 'jenis'])->name('spj.jenis');
     Route::get('/spj/data', [SpjController::class, 'anyData'])->name('spj.data');
     Route::resource('/spj', SpjController::class);
 

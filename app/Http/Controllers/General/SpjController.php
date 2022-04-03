@@ -29,7 +29,12 @@ class SpjController extends Controller
         $month = date('m');
         $start = date('Y') . '-' . ($month - 1) . '-21';
         $end = date('Y') . '-' . $month . '-20';
-        $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
+        if (Auth::user()->can('CRUD SPJ')) {
+            $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
+        } else {
+            $data = $this->model::whereBetween('created_at', [$start, $end])->get();
+
+        }
         return view($this->view . '.index', compact('data'));
     }
 
@@ -66,6 +71,13 @@ class SpjController extends Controller
         $data = Uraian::where('status', 1)
             ->where('sub_id', $id)->get();
         return response()->json($data);
+    }
+
+    public function jenis(Request $request, $id)
+    {
+        $data = $this->model::findOrFail($id);
+        $data->update($request->all());
+        return redirect()->back()->with('status', 'Data berhasil disimpan!');
     }
 
     public function anyData()

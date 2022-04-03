@@ -174,9 +174,31 @@
                                     <th>Tahapan Pengajuan:</th>
                                     <td>: <strong>{{$data->state}}</strong></td>
                                 </tr>
+                                <tr>
+                                    <th>Jenis SPJ:</th>
+                                    <td>: <strong>{{$data->jenis}}</strong></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
+                        @can('Validasi Lanjutan')
+                            @if($data->status  < 3)
+                                {!! Form::model($data, ['url'=>route('spj.jenis',$data->id), 'method'=>'put']) !!}
+                                <div class="form-group">
+                                    <label>Atur Jenis SPJ</label>
+                                    <select class="form-control" name="jenis" required>
+                                        <option>--Pilih Jenis--</option>
+                                        <option value="1">Langsung</option>
+                                        <option value="2">Ganti Uang</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary"
+                                        style="margin-right: 5px;">
+                                    <i class="fas fa-edit"></i> Simpan
+                                </button>
+                                {!! Form::close() !!}
+                            @endif
+                        @endcan
                     </div>
                 </div>
                 <!-- /.row -->
@@ -190,18 +212,39 @@
                         @endcan
                         @can('Validasi Pertama')
                             @if($data->revisi->where('status', '!=', 2)->count() == 0)
-                                {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'method'=>'put']) !!}
-                                <input type="hidden" name="status" value="2">
-                                <button type="submit" class="btn btn-success float-right"
-                                        style="margin-right: 5px;">
-                                    <i class="fas fa-edit"></i> Lanjutkan
-                                </button>
-                                {!! Form::close() !!}
+                                @if($data->status <2)
+                                    {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'method'=>'put']) !!}
+                                    <input type="hidden" name="status" value="2">
+                                    <button type="submit" class="btn btn-success float-right"
+                                            style="margin-right: 5px;">
+                                        <i class="fas fa-edit"></i> Lanjutkan
+                                    </button>
+                                    {!! Form::close() !!}
+                                    <button type="button" class="btn btn-primary float-right"
+                                            style="margin-right: 5px;"
+                                            data-toggle="modal" data-target="#add-revisi">
+                                        <i class="fas fa-edit"></i> Revisi
+                                    </button>
+                                @endif
                             @endif
-                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
-                                    data-toggle="modal" data-target="#add-revisi">
-                                <i class="fas fa-edit"></i> Revisi
-                            </button>
+                        @endcan
+
+                        @can('Validasi Lanjutan')
+                            @if($data->revisi->where('status', '!=', 2)->count() == 0)
+                                @if($data->status > 1 && $data->status < 3)
+                                    {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'method'=>'put']) !!}
+                                    <input type="hidden" name="status" value="3">
+                                    <button type="submit" class="btn btn-success float-right"
+                                            style="margin-right: 5px;">
+                                        <i class="fas fa-edit"></i> Selesai
+                                    </button>
+                                    {!! Form::close() !!}
+                                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                            data-toggle="modal" data-target="#add-revisi">
+                                        <i class="fas fa-edit"></i> Revisi
+                                    </button>
+                                @endif
+                            @endif
                         @endcan
                     </div>
                 </div>

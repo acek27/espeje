@@ -49,6 +49,17 @@ class Spj extends Model
         return $a;
     }
 
+    public function getJenisAttribute($value)
+    {
+        $a = '';
+        if ($value == 1) {
+            $a = 'Langsung';
+        } elseif ($value == 2) {
+            $a = 'Ganti Uang';
+        }
+        return $a;
+    }
+
     public function uraian()
     {
         return $this->belongsTo(Uraian::class, 'uraian_id', 'kode_rek');
