@@ -29,9 +29,11 @@
         @endif
         <div class="card-header">
             <h3 class="card-title">Tabel SPJ</h3>
-            <a href="{{route('spj.create')}}" style="float: right" class="btn btn-primary">
-                <i class="fas fa-plus mr-1"> </i> Ajukan SPJ Baru
-            </a>
+            @can('CRUD SPJ')
+                <a href="{{route('spj.create')}}" style="float: right" class="btn btn-primary">
+                    <i class="fas fa-plus mr-1"> </i> Ajukan SPJ Baru
+                </a>
+            @endcan
         </div>
         <!-- /.card-header -->
         <div class="card-body">

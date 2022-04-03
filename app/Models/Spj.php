@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Spj extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status'];
-    protected $with = ['uraian', 'revisi','pptk'];
+    protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status', 'jenis'];
+    protected $with = ['uraian', 'revisi', 'pptk'];
     protected $appends = ['state'];
     protected $attributes = [
-        'status' => 0
+        'status' => 0,
+        'jenis' => null
     ];
 
     public static $rulesCreate = [

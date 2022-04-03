@@ -19,11 +19,7 @@ class RevisiController extends Controller
 
     public function __construct()
     {
-        $this->middleware([
-            'can:CRUD SPJ',
-            'can:Validasi Pertama',
-            'can:Validasi Lanjutan'
-        ])->except(['update']);
+        $this->middleware('auth');
     }
 
     public function store(Request $request)
@@ -34,25 +30,24 @@ class RevisiController extends Controller
             'spj_id' => $request->spj_id,
             'validator_id' => Auth::user()->id
         ]);
+        $spj = Spj::findOrFail($request->spj_id);
+        $spj->update(['status' => 1]);
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
     }
 
     public function update(Request $request, $id)
     {
-        $data = $this->model::find($id);
-        if ($request->status == 1) {
-            $data->update([
-                'status' => $request->status,
-                'tanggal_submit' => date('Y-m-d')
-            ]);
-        } elseif ($request->status == 2) {
-            $data->update([
-                'status' => $request->status,
-                'tanggal_verifikasi' => date('Y-m-d')
-            ]);
-        }
-
+        $this->progress($request->status, $id);
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
+    }
+
+    public function progress($status, $id)
+    {
+        $data = $this->model::find($id);
+        $data->update([
+            'status' => $status,
+            'tanggal_submit' => date('Y-m-d')
+        ]);
     }
 
     public function destroy($id)

@@ -98,25 +98,38 @@
                                     <td>{{$datum->state}}</td>
                                     <td>{{$datum->validator->name}}</td>
                                     <td>
-                                        @if($datum->status == 0)
-                                            {!! Form::model($datum, ['url'=>route('revisi.destroy',$datum->id), 'method'=>'delete']) !!}
-                                            <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
-                                                <i class="fas fa-trash"></i> Hapus
-                                            </button>
-                                            {!! Form::close() !!}
-                                        @endif
+                                        @can('Validasi Pertama')
+                                            @if($datum->status == 0)
+                                                {!! Form::model($datum, ['url'=>route('revisi.destroy',$datum->id), 'method'=>'delete']) !!}
+                                                <button type="submit" class="btn btn-danger" style="margin-right: 5px;">
+                                                    <i class="fas fa-trash"></i> Hapus
+                                                </button>
+                                                {!! Form::close() !!}
+                                            @endif
+                                        @endcan
                                         @if($datum->status <2)
-                                            {!! Form::model($datum, ['url'=>route('revisi.update',$datum->id), 'method'=>'put']) !!}
-                                            <button type="submit" class="btn btn-primary" style="margin-right: 5px;">
+                                            @can('CRUD SPJ')
                                                 @if($datum->status == 0)
+                                                    {!! Form::model($datum, ['url'=>route('revisi.update',$datum->id), 'method'=>'put']) !!}
                                                     <input type="hidden" name="status" value="1">
-                                                    <i class="fas fa-edit"></i> Ajukan perbaikan
-                                                @elseif($datum->status == 1)
-                                                    <input type="hidden" name="status" value="2">
-                                                    <i class="fas fa-edit"></i> Verifikasi
+                                                    <button type="submit" class="btn btn-primary"
+                                                            style="margin-right: 5px;">
+                                                        <i class="fas fa-edit"></i> Ajukan perbaikan
+                                                    </button>
+                                                    {!! Form::close() !!}
                                                 @endif
-                                            </button>
-                                            {!! Form::close() !!}
+                                            @endcan
+                                            @can('Validasi Pertama')
+                                                @if($datum->status == 1)
+                                                    {!! Form::model($datum, ['url'=>route('revisi.update',$datum->id), 'method'=>'put']) !!}
+                                                    <input type="hidden" name="status" value="2">
+                                                    <button type="submit" class="btn btn-success"
+                                                            style="margin-right: 5px;">
+                                                        <i class="fas fa-edit"></i> Verifikasi
+                                                    </button>
+                                                    {!! Form::close() !!}
+                                                @endif
+                                            @endcan
                                         @else
                                             -
                                         @endif
@@ -135,7 +148,6 @@
                     <!-- accepted payments column -->
                     <div class="col-6">
                         <p class="lead">Lampiran:</p>
-
                         <p class="text-muted well well-sm shadow-none" style="margin-top: 10px;">
                             Berikut ini adalah file dokumen yang dapat diunduh.
                         </p>
@@ -145,7 +157,8 @@
 
                         <div class="table-responsive">
                             <table class="table">
-                                <tbody><tr>
+                                <tbody>
+                                <tr>
                                     <th style="width:50%">Anggaran</th>
                                     <td>: Rp {{number_format($data->uraian->jumlah, 0, ',', '.')}}</td>
                                 </tr>
@@ -161,7 +174,8 @@
                                     <th>Tahapan Pengajuan:</th>
                                     <td>: <strong>{{$data->state}}</strong></td>
                                 </tr>
-                                </tbody></table>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -170,14 +184,25 @@
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                     <div class="col-12">
-                        <a href="invoice-print.html" rel="noopener" class="btn btn-default"><i
-                                class="fas fa-upload"></i> Upload</a>
-                        <button type="button" class="btn btn-success float-right"><i class="fa fa-check"></i> Selesai
-                        </button>
-                        <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
-                                data-toggle="modal" data-target="#add-revisi">
-                            <i class="fas fa-edit"></i> Revisi
-                        </button>
+                        @can('CRUD SPJ')
+                            <a href="invoice-print.html" rel="noopener" class="btn btn-default"><i
+                                    class="fas fa-upload"></i> Upload</a>
+                        @endcan
+                        @can('Validasi Pertama')
+                            @if($data->revisi->where('status', '!=', 2)->count() == 0)
+                                {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'method'=>'put']) !!}
+                                <input type="hidden" name="status" value="2">
+                                <button type="submit" class="btn btn-success float-right"
+                                        style="margin-right: 5px;">
+                                    <i class="fas fa-edit"></i> Lanjutkan
+                                </button>
+                                {!! Form::close() !!}
+                            @endif
+                            <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;"
+                                    data-toggle="modal" data-target="#add-revisi">
+                                <i class="fas fa-edit"></i> Revisi
+                            </button>
+                        @endcan
                     </div>
                 </div>
             </div>
@@ -211,8 +236,8 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
                 </div>
                 {!! Form::close() !!}
             </div>

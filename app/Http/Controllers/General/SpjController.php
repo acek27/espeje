@@ -45,6 +45,13 @@ class SpjController extends Controller
         return redirect(route($this->route . '.index'))->with('status', 'Data berhasil disimpan!');
     }
 
+    public function update(Request $request, $id)
+    {
+        $data = $this->model::findOrFail($id);
+        $data->update($request->all());
+        return redirect()->back()->with('status', 'Data berhasil disimpan!');
+    }
+
     public function listuraian(Request $request, $id)
     {
         $data = Uraian::where('status', 1)
