@@ -7,6 +7,8 @@ use App\Models\Document;
 use App\Models\Spj;
 use App\Models\Subkegiatan;
 use App\Models\Uraian;
+use App\Models\User;
+use App\Notifications\TelegramNotification;
 use App\Traits\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -64,6 +66,14 @@ class SpjController extends Controller
     {
         $data = $this->model::findOrFail($id);
         $data->update($request->all());
+        $notif = User::findOrFail($data->pptk_id);
+        if ($data->status == 4) {
+            $notif->notify(new TelegramNotification([
+                'text' => "INFORMASI SIPEJE! \r\n Nomor Rekening Uraian: "
+                    . $data->uraian_id . "\r\n Nama Uraian: "
+                    . $data->uraian->nama_uraian."\r\n Status: Selesai"
+            ]));
+        }
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
     }
 

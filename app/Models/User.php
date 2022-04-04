@@ -23,7 +23,8 @@ class User extends Authenticatable
         'hp',
         'email',
         'password',
-        'username'
+        'username',
+        'chat_id'
     ];
 
     /**
@@ -79,4 +80,8 @@ class User extends Authenticatable
         return false;
     }
 
+    public function routeNotificationForTelegram()
+    {
+        return $this->chat_id;
+    }
 }

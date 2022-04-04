@@ -57,6 +57,20 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
+                                <label for="chat_id" class="col-md-4 col-form-label text-md-end">{{ __('Chat ID') }}</label>
+
+                                <div class="col-md-6">
+                                    <input id="chat_id" type="text" class="form-control @error('chat_id') is-invalid @enderror"
+                                           name="chat_id" value="{{ old('chat_id') }}" required autocomplete="chat_id" autofocus>
+
+                                    @error('chat_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row mb-3">
                                 <label for="hp" class="col-md-4 col-form-label text-md-end">{{ __('Role') }}</label>
 
                                 <div class="col-md-6">
