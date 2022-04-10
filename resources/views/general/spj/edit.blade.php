@@ -53,15 +53,16 @@
             $('#sub').change(function () {
                 var id = $(this).val();
                 $.ajax({
-                    url: "/spj/listuraian/" + id,
+                    url: "{{route('spj.uraian')}}",
                     method: "POST",
                     data: {id: id},
                     async: true,
                     dataType: 'json',
                     success: function (data) {
-                        var html = '<option selected>-- Pilih Kegiatan -- </option>';
+                        var html = '<option value="" selected>-- Pilih Uraian -- </option>';
                         if (id === "") {
                             $('#uraian').html(html);
+                            $('#rat').text("");
                         } else {
                             var i;
                             for (i = 0; i < data.length; i++) {
@@ -69,13 +70,31 @@
                                 $('#uraian').html(html);
                             }
                         }
-                        console.log(data);
                     }
                 });
                 return false;
             });
             $('.select2').select2({
                 theme: 'bootstrap4'
+            });
+
+            $('#uraian').change(function () {
+                var id = $(this).val();
+                $.ajax({
+                    url: "{{route('spj.rat')}}",
+                    method: "POST",
+                    data: {id: id},
+                    async: true,
+                    dataType: 'json',
+                    success: function (data) {
+                        if (id === "") {
+                            $('#rat').text("");
+                        } else {
+                            $('#rat').text(data.rat);
+                        }
+                    }
+                });
+                return false;
             });
         });
     </script>

@@ -11,6 +11,7 @@ class Uraian extends Model
     use SoftDeletes;
 
     protected $with = ['subkegiatan'];
+    protected $appends = ['rat'];
     protected $fillable = [
         'kode_rek',
         'sub_id',
@@ -36,6 +37,10 @@ class Uraian extends Model
         ];
     }
 
+    public function getratAttribute()
+    {
+        return " Rp. ".number_format($this->jumlah,0,",",".");
+    }
 
     protected function namaUraian(): Attribute
     {

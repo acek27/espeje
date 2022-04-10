@@ -109,6 +109,7 @@
             <table id="spj" class="table table-bordered table-striped">
                 <thead>
                 <tr>
+                    <th>Bidang</th>
                     <th>Kode Rekening</th>
                     <th>Uraian Kegiatan</th>
                     <th>Jumlah</th>
@@ -149,6 +150,7 @@
                 serverSide: true,
                 ajax: '{{route('spj.data')}}',
                 columns: [
+                    {data: 'bidang', name: 'bidang', orderable: false, searchable: false, align: 'center'},
                     {data: 'uraian_id', name: 'uraian_id'},
                     {data: 'uraian.nama_uraian', name: 'uraian.nama_uraian'},
                     {data: 'jumlah', name: 'jumlah', orderable: false, searchable: false, align: 'center'},

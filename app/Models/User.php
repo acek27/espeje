@@ -24,8 +24,10 @@ class User extends Authenticatable
         'email',
         'password',
         'username',
-        'chat_id'
+        'chat_id',
+        'role_id'
     ];
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -65,6 +67,7 @@ class User extends Authenticatable
         }
         return ($a == "") ? "" : substr($a, 0, strlen($a) - 2);
     }
+
 
     public function roles()
     {

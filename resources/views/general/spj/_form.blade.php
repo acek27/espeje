@@ -35,7 +35,17 @@
     <!-- /.input group -->
 </div>
 
-<div class="form-group">
+
+<div class="form-group mt-3">
+    <div class="row">
+        {{ Form::label('rat', 'Rencana Anggaran:') }}
+        <p id="rat"></p>
+    </div>
+    <!-- /.input group -->
+</div>
+
+
+<div class="form-group mt-3">
     {{ Form::label('jumlah', 'Jumlah Anggaran') }}
 
     <div class="input-group">

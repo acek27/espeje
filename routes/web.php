@@ -41,7 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/uraian', UraianController::class);
 
 //SPJ
-    Route::post('/spj/listuraian/{id}', [SpjController::class, 'listuraian'])->name('spj.uraian');
+    Route::post('/spj/listuraian/', [SpjController::class, 'listuraian'])->name('spj.uraian');
+    Route::post('/spj/rat/', [SpjController::class, 'rat'])->name('spj.rat');
     Route::put('/spj/jenis/{id}', [SpjController::class, 'jenis'])->name('spj.jenis');
     Route::get('/spj/data', [SpjController::class, 'anyData'])->name('spj.data');
     //upload

@@ -71,18 +71,25 @@ class SpjController extends Controller
             $notif->notify(new TelegramNotification([
                 'text' => "INFORMASI SIPEJE! \r\n Nomor Rekening Uraian: "
                     . $data->uraian_id . "\r\n Nama Uraian: "
-                    . $data->uraian->nama_uraian."\r\n Status: Selesai"
+                    . $data->uraian->nama_uraian . "\r\n Status: Selesai"
             ]));
         }
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
     }
 
-    public function listuraian(Request $request, $id)
+    public function listuraian(Request $request)
     {
         $data = Uraian::where('status', 1)
-            ->where('sub_id', $id)->get();
+            ->where('sub_id', $request->id)->get();
         return response()->json($data);
     }
+
+    public function rat(Request $request)
+    {
+        $data = Uraian::where("kode_rek", $request->id)->first();
+        return response()->json($data);
+    }
+
 
     public function jenis(Request $request, $id)
     {
@@ -100,6 +107,17 @@ class SpjController extends Controller
 
         }
         return DataTables::of($query)
+            ->addColumn('bidang', function ($data) {
+                $bidang = "";
+                if ($data->bidang_id == 1) {
+                    $bidang = "Tata Usaha";
+                } elseif ($data->bidang_id == 2) {
+                    $bidang = "Rumah Tangga";
+                } elseif ($data->bidang_id == 3) {
+                    $bidang = "perlengkapan";
+                }
+                return $bidang;
+            })
             ->addColumn('progress', function ($data) {
                 $progress = 0;
                 $bar = '';
@@ -137,7 +155,11 @@ class SpjController extends Controller
                 $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
                 $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
                 if (Auth::user()->can('CRUD SPJ')) {
-                    return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
+                    if ($data->status >= 3) {
+                        return $view;
+                    } else {
+                        return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
+                    }
                 } elseif (Auth::user()->can('Validasi Pertama') || Auth::user()->can('Validasi Lanjutan') || Auth::user()->can('View SPJ')) {
                     return $view;
                 }

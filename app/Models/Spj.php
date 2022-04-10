@@ -13,7 +13,7 @@ class Spj extends Model
 
     protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status', 'jenis', 'bidang_id'];
     protected $with = ['uraian', 'revisi', 'pptk', 'document'];
-    protected $appends = ['state'];
+    protected $appends = ['state','divisi'];
     protected $attributes = [
         'status' => 0,
         'jenis' => null
@@ -47,6 +47,19 @@ class Spj extends Model
             $a = 'Selesai';
         }
         return $a;
+    }
+
+    public function getDivisiAttribute()
+    {
+        $bidang = "";
+        if ($this->bidang_id == 1) {
+            $bidang = "Tata Usaha";
+        } elseif ($this->bidang_id == 2) {
+            $bidang = "Rumah Tangga";
+        } elseif ($this->bidang_id == 3) {
+            $bidang = "perlengkapan";
+        }
+        return $bidang;
     }
 
     public function getJenisAttribute($value)
