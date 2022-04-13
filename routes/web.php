@@ -41,10 +41,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/uraian', UraianController::class);
 
 //SPJ
+    Route::get('/spj/data/{status}/more', [SpjController::class, 'more'])->name('spj.more');
     Route::post('/spj/listuraian/', [SpjController::class, 'listuraian'])->name('spj.uraian');
     Route::post('/spj/rat/', [SpjController::class, 'rat'])->name('spj.rat');
     Route::put('/spj/jenis/{id}', [SpjController::class, 'jenis'])->name('spj.jenis');
     Route::get('/spj/data', [SpjController::class, 'anyData'])->name('spj.data');
+    Route::get('/spj/moredata', [SpjController::class, 'moredata'])->name('spj.moredata');
     //upload
     Route::get('/spj/upload/{document}', [SpjController::class, 'upload'])->name('spj.upload');
     Route::post('/spj/upload/{document}', [SpjController::class, 'storeDoc'])->name('spj.storeDoc');

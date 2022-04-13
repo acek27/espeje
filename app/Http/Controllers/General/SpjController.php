@@ -223,4 +223,85 @@ class SpjController extends Controller
         return response()->download($file, $poster->nama_dokumen, $headers);
     }
 
+    public function more($status)
+    {
+        return view($this->view . '.more', compact('status'));
+    }
+
+    public function moredata(Request $request)
+    {
+        if (Auth::user()->can('CRUD SPJ')) {
+            if ($request->status == 1)
+                $query = $this->model::where('bidang_id', Auth::user()->role_id)
+                    ->where('status', '<=', 3);
+            elseif ($request->status == 2) {
+                $query = $this->model::where('bidang_id', Auth::user()->role_id)
+                    ->where('status', 4);
+            }
+        } else {
+            $query = $this->model::where('status', $request->status);
+
+        }
+        return DataTables::of($query)
+            ->addColumn('bidang', function ($data) {
+                $bidang = "";
+                if ($data->bidang_id == 1) {
+                    $bidang = "Tata Usaha";
+                } elseif ($data->bidang_id == 2) {
+                    $bidang = "Rumah Tangga";
+                } elseif ($data->bidang_id == 3) {
+                    $bidang = "perlengkapan";
+                }
+                return $bidang;
+            })
+            ->addColumn('progress', function ($data) {
+                $progress = 0;
+                $bar = '';
+                if ($data->status == 0) {
+                    $progress;
+                    $bar = 'bg-danger';
+                } elseif ($data->status == 1) {
+                    $progress = 25;
+                    $bar = 'bg-danger';
+                } elseif ($data->status == 2) {
+                    $progress = 50;
+                    $bar = 'bg-orange';
+                } elseif ($data->status == 3) {
+                    $progress = 75;
+                    $bar = 'bg-warning';
+                } else {
+                    $progress = 100;
+                    $bar = 'bg-success';
+                }
+                $result = '<div data-toggle="tooltip" title="' . $progress . '" class="progress-group"><strong>' . number_format($progress, 0, '.', '') . '%</strong>
+                            Complete<div class="progress progress-sm">
+                                <div class="progress-bar ' . $bar . '"
+                                     style="width: ' . $progress . '%"></div>
+                            </div>
+                            <!-- /.progress-group -->
+                        </div>';
+                return $result;
+            })
+            ->addColumn('jumlah', function ($data) {
+
+                return 'Rp. ' . number_format($data->jumlah, 0, ',', '.');
+            })
+            ->addColumn('action', function ($data) {
+                $view = '<a href="' . route($this->route . '.show', $data->id) . '"><i class="fa fa-search text-info"></i></a>';
+                $edit = '<a href="' . route($this->route . '.edit', [$this->route => $data->id]) . '"><i class="fa fa-edit text-primary"></i></a>';
+                $del = '<a href="#" data-id="' . $data->id . '" class="hapus-data"> <i class="fa fa-trash text-danger"></i></a>';
+                if (Auth::user()->can('CRUD SPJ')) {
+                    if ($data->status >= 3) {
+                        return $view;
+                    } else {
+                        return $view . '&nbsp' . '&nbsp' . $edit . '&nbsp' . '&nbsp' . $del;
+                    }
+                } elseif (Auth::user()->can('Validasi Pertama') || Auth::user()->can('Validasi Lanjutan') || Auth::user()->can('View SPJ')) {
+                    return $view;
+                }
+            })
+            ->rawColumns(['action', 'progress'])
+            ->make(true);
+    }
+
 }
