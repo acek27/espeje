@@ -232,14 +232,14 @@ class SpjController extends Controller
     {
         if (Auth::user()->can('CRUD SPJ')) {
             if ($request->status == 1)
-                $query = $this->model::where('bidang_id', Auth::user()->role_id)
+                $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id)
                     ->where('status', '<=', 3);
             elseif ($request->status == 2) {
-                $query = $this->model::where('bidang_id', Auth::user()->role_id)
+                $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id)
                     ->where('status', 4);
             }
         } else {
-            $query = $this->model::where('status', $request->status);
+            $query = $this->model::with('uraian')->where('status', $request->status);
 
         }
         return DataTables::of($query)

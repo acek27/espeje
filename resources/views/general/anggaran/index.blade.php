@@ -62,7 +62,7 @@
                                                 @endforeach
                                             </ul>
                                             @if($list->spj->count() != 0)
-                                                <strong>Sisa Anggaran Rp. {{$list->sisa}}</strong>
+                                                <strong>Sisa Anggaran {{$list->sisa}}</strong>
                                             @endif
                                         </td>
                                         <td style="text-align: right">
