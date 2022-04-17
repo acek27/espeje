@@ -43,7 +43,21 @@
     </div>
     <!-- /.input group -->
 </div>
+<div class="form-group mt-3">
+    <div class="row">
+        {{ Form::label('sisa', 'Sisa Anggaran:') }}
+        <p id="sisa"></p>
+    </div>
+    <!-- /.input group -->
+</div>
 
+<div class="form-group mt-3">
+    <div class="row">
+        {{ Form::label('used', 'Total Pengajuan Dilakukan:') }}
+        <p id="used"></p>
+    </div>
+    <!-- /.input group -->
+</div>
 
 <div class="form-group mt-3">
     {{ Form::label('jumlah', 'Jumlah Anggaran') }}

@@ -101,9 +101,9 @@ class SpjController extends Controller
     public function anyData()
     {
         if (Auth::user()->can('CRUD SPJ')) {
-            $query = $this->model::where('bidang_id', Auth::user()->role_id);
+            $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id);
         } else {
-            $query = $this->model::query();
+            $query = $this->model::with('uraian')->all();
 
         }
         return DataTables::of($query)

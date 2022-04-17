@@ -12,7 +12,7 @@ class Spj extends Model
     use SoftDeletes;
 
     protected $fillable = ['uraian_id', 'pptk_id', 'jumlah', 'status', 'jenis', 'bidang_id'];
-    protected $with = ['uraian', 'revisi', 'pptk', 'document'];
+    protected $with = ['revisi', 'pptk', 'document'];
     protected $appends = ['state','divisi'];
     protected $attributes = [
         'status' => 0,

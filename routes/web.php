@@ -5,6 +5,7 @@ use App\Http\Controllers\Rekening\SubkegiatanController;
 use App\Http\Controllers\Rekening\UraianController;
 use App\Http\Controllers\General\SpjController;
 use App\Http\Controllers\General\RevisiController;
+use App\Http\Controllers\General\AnggaranController;
 use App\Http\Controllers\PermissionController;
 
 /*
@@ -57,4 +58,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/laportugas/upload/', 'Assignment\Tenagatik\LaportugasController@deleteDocument')->name('laportugas.deleteDoc');
 //Revisi
     Route::resource('/revisi', RevisiController::class);
+
+//Anggaran
+    Route::resource('/anggaran', AnggaranController::class);
 });

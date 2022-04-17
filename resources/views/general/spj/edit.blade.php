@@ -63,6 +63,8 @@
                         if (id === "") {
                             $('#uraian').html(html);
                             $('#rat').text("");
+                            $('#used').text("");
+                            $('#sisa').text("");
                         } else {
                             var i;
                             for (i = 0; i < data.length; i++) {
@@ -89,8 +91,12 @@
                     success: function (data) {
                         if (id === "") {
                             $('#rat').text("");
+                            $('#used').text("");
+                            $('#sisa').text("");
                         } else {
+                            $('#sisa').text(data.sisa);
                             $('#rat').text(data.rat);
+                            $('#used').text(data.used);
                         }
                     }
                 });

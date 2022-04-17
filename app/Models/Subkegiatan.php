@@ -37,4 +37,10 @@ class Subkegiatan extends Model
             set: fn ($value) => ucfirst($value),
         );
     }
+
+
+    public function uraian()
+    {
+        return $this->hasMany(Uraian::class, 'sub_id', 'kode_rek');
+    }
 }

@@ -11,7 +11,7 @@ class Uraian extends Model
     use SoftDeletes;
 
     protected $with = ['subkegiatan'];
-    protected $appends = ['rat'];
+    protected $appends = ['rat', 'sisa', 'used'];
     protected $fillable = [
         'kode_rek',
         'sub_id',
@@ -37,9 +37,9 @@ class Uraian extends Model
         ];
     }
 
-    public function getratAttribute()
+    public function getRatAttribute()
     {
-        return " Rp. ".number_format($this->jumlah,0,",",".");
+        return " Rp. " . number_format($this->jumlah, 0, ",", ".");
     }
 
     protected function namaUraian(): Attribute
@@ -52,5 +52,21 @@ class Uraian extends Model
     public function subkegiatan()
     {
         return $this->belongsTo(Subkegiatan::class, 'sub_id', 'kode_rek');
+    }
+
+    public function spj()
+    {
+        return $this->hasMany(Spj::class, 'uraian_id', 'kode_rek');
+    }
+
+    public function getSisaAttribute()
+    {
+        $used = $this->spj->sum('jumlah');
+        return " Rp. " . number_format($this->jumlah - $used, 0, ",", ".");
+    }
+
+    public function getUsedAttribute()
+    {
+        return $this->spj->count();
     }
 }

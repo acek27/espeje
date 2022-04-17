@@ -60,7 +60,7 @@
                         <address>
                             <strong>Kode Rekening:</strong><br>
                             {{$data->uraian->kode_rek}}<br>
-                            <strong>Sub Kegiatan:</strong><br>
+                            <strong>Nama Uraian:</strong><br>
                             {{$data->uraian->nama_uraian}}<br>
                         </address>
                     </div>
@@ -163,16 +163,16 @@
                             <table class="table">
                                 <tbody>
                                 <tr>
-                                    <th style="width:50%">Anggaran</th>
+                                    <th style="width:50%">Rencana Anggaran Tahunan</th>
                                     <td>: Rp {{number_format($data->uraian->jumlah, 0, ',', '.')}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Anggaran SPJ</th>
+                                    <th>Pengajuan SPJ</th>
                                     <td>: Rp {{number_format($data->jumlah, 0, ',', '.')}}</td>
                                 </tr>
                                 <tr>
                                     <th>Sisa Anggaran:</th>
-                                    <td>: Rp {{number_format($data->uraian->jumlah -$data->jumlah, 0, ',', '.')}}</td>
+                                    <td>: {{$data->uraian->sisa}}</td>
                                 </tr>
                                 <tr>
                                     <th>Tahapan Pengajuan:</th>
