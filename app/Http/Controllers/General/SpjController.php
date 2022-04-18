@@ -10,6 +10,7 @@ use App\Models\Uraian;
 use App\Models\User;
 use App\Notifications\TelegramNotification;
 use App\Traits\Resource;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
@@ -71,7 +72,8 @@ class SpjController extends Controller
             $notif->notify(new TelegramNotification([
                 'text' => "INFORMASI SIPEJE! \r\n Nomor Rekening Uraian: "
                     . $data->uraian_id . "\r\n Nama Uraian: "
-                    . $data->uraian->nama_uraian . "\r\n Status: Selesai"
+                    . $data->uraian->nama_uraian . "\r\n Nama Uraian: "
+                    . Carbon::parse($data->created_at)->isoFormat('D MMMM Y') . "\r\n Status: Selesai"
             ]));
         }
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
@@ -103,7 +105,7 @@ class SpjController extends Controller
         if (Auth::user()->can('CRUD SPJ')) {
             $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id);
         } else {
-            $query = $this->model::with('uraian')->all();
+            $query = $this->model::with('uraian');
 
         }
         return DataTables::of($query)
@@ -239,7 +241,11 @@ class SpjController extends Controller
                     ->where('status', 4);
             }
         } else {
-            $query = $this->model::with('uraian')->where('status', $request->status);
+            if ($request->status == 1)
+                $query = $this->model::with('uraian')->where('status', '<=', 3);
+            elseif ($request->status == 2) {
+                $query = $this->model::with('uraian')->where('status', 4);
+            }
 
         }
         return DataTables::of($query)
