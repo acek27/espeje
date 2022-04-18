@@ -19,7 +19,7 @@ class UraianController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:CRUD Rekening');
+        $this->middleware('can:CRUD Rekening')->except('search');
     }
 
     public function index()
@@ -89,4 +89,10 @@ class UraianController extends Controller
             ->make(true);
     }
 
+    public function search(Request $request)
+    {
+        $result = $this->model::where('nama_uraian', 'like', '%' . $request->keyword . '%')->get();
+        $keyword = $request->keyword;
+        return view('search', compact('result', 'keyword'));
+    }
 }

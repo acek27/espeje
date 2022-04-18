@@ -25,6 +25,8 @@ Route::get('/', function () {
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
+//Search
+    Route::post('/uraian/seacrh', [UraianController::class, 'search'])->name('search');
 //Permission
     Route::get('/permission/data', [PermissionController::class, 'anyData'])->name('permission.anydata');
     Route::delete('/permission/{id}/delete', [PermissionController::class, 'delete'])->name('permission.delete');
@@ -61,4 +63,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 //Anggaran
     Route::resource('/anggaran', AnggaranController::class);
+
 });
