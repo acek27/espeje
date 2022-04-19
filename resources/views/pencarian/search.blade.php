@@ -30,7 +30,7 @@
                                     <div class="col-12">
                                         <h2 class="lead"><b>{{$datum->nama_uraian}}</b></h2>
                                         <p class="text-muted text-sm mb-0"><b>Rencana Anggaran
-                                                Tahunan: </b> Rp. {{number_format($datum->jumlah),0,'.',','}}</p>
+                                                Tahunan: </b> Rp. {{number_format($datum->jumlah,0,',','.')}}</p>
                                         <p class="text-muted text-sm mb-0"><b>Sub Kegiatan: </b></p>
                                         <ul class="ml-4 mb-0 fa-ul text-muted mt">
                                             <li class="small"><span class="fa-li"><i
@@ -47,7 +47,8 @@
                             </div>
                             <div class="card-footer">
                                 <div class="text-right">
-                                    <a href="#" class="btn btn-sm btn-primary">
+                                    <a href="{{route('search.detail',$datum->kode_rek)}}"
+                                       class="btn btn-sm btn-primary">
                                         <i class="fas fa-arrow-alt-circle-right"></i> Lihat
                                     </a>
                                 </div>

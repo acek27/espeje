@@ -26,6 +26,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
 //Search
+    Route::get('/uraian/seacrh/{id}', [UraianController::class, 'searchdetail'])->name('search.detail');
     Route::post('/uraian/seacrh', [UraianController::class, 'search'])->name('search');
 //Permission
     Route::get('/permission/data', [PermissionController::class, 'anyData'])->name('permission.anydata');

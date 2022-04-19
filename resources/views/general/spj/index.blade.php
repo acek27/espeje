@@ -77,18 +77,20 @@
         <div class="col-lg-11">
             <div class="progress">
                 @php($class = "")
-                @if($selesai/$total*100 >= 90)
-                    @php($class = "success")
-                @elseif($selesai/$total*100 >= 70)
-                    @php($class = "warning")
-                @else
-                    @php($class = "danger")
+                @if($total!=0)
+                    @if($selesai/$total*100 >= 90)
+                        @php($class = "success")
+                    @elseif($selesai/$total*100 >= 70)
+                        @php($class = "warning")
+                    @else
+                        @php($class = "danger")
+                    @endif
+                    <div class="progress-bar bg-{{$class}} progress-bar-striped" role="progressbar"
+                         aria-valuenow="{{$selesai == 0 ? '0' : $selesai/$total*100}}"
+                         aria-valuemin="0" aria-valuemax="100"
+                         style="width: {{$selesai == 0 ? '0' : $selesai/$total*100}}%">
+                    </div>
                 @endif
-                <div class="progress-bar bg-{{$class}} progress-bar-striped" role="progressbar"
-                     aria-valuenow="{{$selesai == 0 ? '0' : $selesai/$total*100}}"
-                     aria-valuemin="0" aria-valuemax="100"
-                     style="width: {{$selesai == 0 ? '0' : $selesai/$total*100}}%">
-                </div>
             </div>
         </div>
         <div class="col-lg-1">
