@@ -33,6 +33,13 @@
                             </ul>
                         </div>
                     @endif
+                    @if (session('error'))
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h5><i class="icon fas fa-check"></i> Gagal!</h5>
+                            {{ session('error') }}
+                        </div>
+                    @endif
                     {!! Form::model($data, ['url'=>route('spj.update',$data->id), 'files' => true, 'method'=>'put']) !!}
                     @include('general.spj._form')
                     {!! Form::submit('Simpan', [

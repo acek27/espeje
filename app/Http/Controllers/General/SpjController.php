@@ -31,10 +31,11 @@ class SpjController extends Controller
     public function index()
     {
         $month = date('m');
-        $start = date('Y') . '-' . ($month - 1) . '-21';
-        $end = date('Y') . '-' . $month . '-20';
+        $start = date('Y') . '-' . ($month) . '-21';
+        $end = date('Y') . '-' . ($month +1). '-20';
         if (Auth::user()->can('CRUD SPJ')) {
             $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
+//            $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
         } else {
             $data = $this->model::whereBetween('created_at', [$start, $end])->get();
 
@@ -57,6 +58,10 @@ class SpjController extends Controller
 
     public function store(Request $request)
     {
+        $data = Uraian::where('kode_rek', $request->uraian_id)->first()->saving;
+        if ($data - $request->jumlah < 0) {
+            return redirect()->back()->with('error', 'Anggaran tidak mencukupi!');
+        }
         $request->request->add(['pptk_id' => Auth::user()->id, 'bidang_id' => Auth::user()->role_id]);
         $this->validate($request, $this->model::$rulesCreate);
         $this->model::create($request->all());
@@ -65,8 +70,16 @@ class SpjController extends Controller
 
     public function update(Request $request, $id)
     {
+        $data = Uraian::where('kode_rek', $request->uraian_id)->first()->saving;
+        if ($data - $request->jumlah < 0) {
+            return redirect()->back()->with('error', 'Anggaran tidak mencukupi!');
+        }
         $data = $this->model::findOrFail($id);
         $data->update($request->all());
+        $link = "";
+        foreach ($data->document as $doc) {
+            $link .= "\r\n" . $_SERVER['SERVER_ADDR'];
+        }
         $notif = User::findOrFail($data->pptk_id);
         if ($data->status == 4) {
             $notif->notify(new TelegramNotification([

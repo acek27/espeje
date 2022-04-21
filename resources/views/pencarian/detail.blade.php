@@ -14,7 +14,7 @@
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-search"></i>
-                Dafta SPJ yang diajukan: {{$data->spj->count()}}
+                Daftar SPJ yang diajukan: {{$data->spj->count()}}
             </h3>
         </div>
         <div class="card-body pb-0">

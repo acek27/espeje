@@ -11,7 +11,7 @@ class Uraian extends Model
     use SoftDeletes;
 
     protected $with = ['subkegiatan'];
-    protected $appends = ['rat', 'sisa', 'used'];
+    protected $appends = ['rat', 'sisa', 'used','saving'];
     protected $fillable = [
         'kode_rek',
         'sub_id',
@@ -63,6 +63,11 @@ class Uraian extends Model
     {
         $used = $this->spj->sum('jumlah');
         return " Rp. " . number_format($this->jumlah - $used, 0, ",", ".");
+    }
+    public function getSavingAttribute()
+    {
+        $used = $this->spj->sum('jumlah');
+        return $this->jumlah - $used;
     }
 
     public function getUsedAttribute()

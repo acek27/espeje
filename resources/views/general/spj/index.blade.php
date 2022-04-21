@@ -116,6 +116,29 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
+            @php($bulan=['Januari', 'Februari', 'Maret', 'April','Mei',
+                         'Juni', 'Juli','Agustus','September','Oktober','November','Desember'])
+            <div class="row mb-3">
+                <div class="col-3">
+                    <select class="form-control select2" name="bulan" id="bulan">
+                        <option value="">--Pilih bulan--</option>
+                        @for($i = 1;$i <=12;$i++ )
+                            <option value="{{$i}}">{{$bulan[$i-1]}}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-4">
+                    <select class="form-control select2" name="tahun" id="tahun">
+                        <option value="">--Pilih Tahun--</option>
+                        @for($tahun = date('Y');$tahun >= date('Y')-10;$tahun--)
+                            <option value="">{{$tahun}}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="col-5">
+                    <button class="btn btn-info" type="submit">Filter</button>
+                </div>
+            </div>
             <table id="spj" class="table table-bordered table-striped">
                 <thead>
                 <tr>
