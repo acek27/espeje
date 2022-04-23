@@ -21,6 +21,7 @@
     @php($selesai = $data->where('status', 4)->count())
     @php($belum = $data->where('status', '!=',4)->count())
     <!-- Info boxes -->
+        <h4 class="text-center">Progres Periode {{Carbon\Carbon::now()->isoFormat('MMMM Y')}}</h4>
     <div class="row">
         <div class="col-lg-4 col-6">
             <!-- small box -->
@@ -50,7 +51,7 @@
                 <div class="icon">
                     <i class="fa fa-check-double"></i>
                 </div>
-                <a href="{{route('spj.more', 2)}}" class="small-box-footer">More info <i
+                <a href="{{route('spj.more', 2)}}" class="small-box-footer">Lihat detail <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -67,7 +68,7 @@
                 <div class="icon">
                     <i class="fa fa-times-circle"></i>
                 </div>
-                <a href="{{route('spj.more',1)}}" class="small-box-footer">More info <i
+                <a href="{{route('spj.more',1)}}" class="small-box-footer">Lihat detail <i
                         class="fas fa-arrow-circle-right"></i></a>
             </div>
         </div>
@@ -118,27 +119,30 @@
         <div class="card-body">
             @php($bulan=['Januari', 'Februari', 'Maret', 'April','Mei',
                          'Juni', 'Juli','Agustus','September','Oktober','November','Desember'])
-            <div class="row mb-3">
-                <div class="col-3">
-                    <select class="form-control select2" name="bulan" id="bulan">
-                        <option value="">--Pilih bulan--</option>
-                        @for($i = 1;$i <=12;$i++ )
-                            <option value="{{$i}}">{{$bulan[$i-1]}}</option>
-                        @endfor
-                    </select>
+            <form class="form-group" action="" method="post">
+                <div class="row mb-3">
+                    @csrf
+                    <div class="col-3">
+                        <select class="form-control select2" name="bulan" id="bulan" required>
+                            <option value="">--Pilih bulan--</option>
+                            @for($i = 1;$i <=12;$i++ )
+                                <option value="{{$i}}">{{$bulan[$i-1]}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="col-4">
+                        <select class="form-control select2" name="tahun" id="tahun" required>
+                            <option value="">--Pilih Tahun--</option>
+                            @for($tahun = date('Y');$tahun >= date('Y')-10;$tahun--)
+                                <option value="{{$tahun}}">{{$tahun}}</option>
+                            @endfor
+                        </select>
+                    </div>
+                    <div class="col-5">
+                        <input class="btn btn-info" id="send" type="submit" value="Filter">
+                    </div>
                 </div>
-                <div class="col-4">
-                    <select class="form-control select2" name="tahun" id="tahun">
-                        <option value="">--Pilih Tahun--</option>
-                        @for($tahun = date('Y');$tahun >= date('Y')-10;$tahun--)
-                            <option value="">{{$tahun}}</option>
-                        @endfor
-                    </select>
-                </div>
-                <div class="col-5">
-                    <button class="btn btn-info" type="submit">Filter</button>
-                </div>
-            </div>
+            </form>
             <table id="spj" class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -211,7 +215,13 @@
                 });
                 dt.ajax.reload();
             });
-        });
 
+            $("form ").submit(function (event) {
+                var bulan = $("#bulan").val();
+                var tahun = $("#tahun").val();
+                dt.ajax.url('{{route('spj.data')}}?bulan=' + bulan + '&tahun=' + tahun).load();
+                event.preventDefault();
+            });
+        });
     </script>
 @endpush

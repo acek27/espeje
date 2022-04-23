@@ -32,7 +32,7 @@ class SpjController extends Controller
     {
         $month = date('m');
         $start = date('Y') . '-' . ($month) . '-21';
-        $end = date('Y') . '-' . ($month +1). '-20';
+        $end = date('Y') . '-' . ($month + 1) . '-20';
         if (Auth::user()->can('CRUD SPJ')) {
             $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
 //            $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
@@ -113,12 +113,27 @@ class SpjController extends Controller
         return redirect()->back()->with('status', 'Data berhasil disimpan!');
     }
 
-    public function anyData()
+    public function anyData(Request $request)
     {
         if (Auth::user()->can('CRUD SPJ')) {
-            $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id);
+            if ($request->bulan == 0 && $request->tahun == 0) {
+                $query = $this->model::with('uraian')
+                    ->where('bidang_id', Auth::user()->role_id);
+            } else {
+                $query = $this->model::with('uraian')
+                    ->whereMonth('created_at', $request->bulan)
+                    ->whereYear('created_at', $request->tahun)
+                    ->where('bidang_id', Auth::user()->role_id);
+            }
+
         } else {
-            $query = $this->model::with('uraian');
+            if ($request->bulan == 0 && $request->tahun == 0) {
+                $query = $this->model::with('uraian');
+            } else {
+                $query = $this->model::with('uraian')
+                    ->whereMonth('created_at', $request->bulan)
+                    ->whereYear('created_at', $request->tahun);
+            }
 
         }
         return DataTables::of($query)
