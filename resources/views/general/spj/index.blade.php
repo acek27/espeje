@@ -21,7 +21,7 @@
     @php($selesai = $data->where('status', 4)->count())
     @php($belum = $data->where('status', '!=',4)->count())
     <!-- Info boxes -->
-        <h4 class="text-center">Progres Periode {{Carbon\Carbon::now()->isoFormat('MMMM Y')}}</h4>
+    <h4 class="text-center">Progres Periode {{Carbon\Carbon::now()->isoFormat('MMMM Y')}}</h4>
     <div class="row">
         <div class="col-lg-4 col-6">
             <!-- small box -->
@@ -124,7 +124,7 @@
                     @csrf
                     <div class="col-3">
                         <select class="form-control select2" name="bulan" id="bulan" required>
-                            <option value="">--Pilih bulan--</option>
+                            <option value="">--Pilih periode--</option>
                             @for($i = 1;$i <=12;$i++ )
                                 <option value="{{$i}}">{{$bulan[$i-1]}}</option>
                             @endfor

@@ -115,14 +115,17 @@ class SpjController extends Controller
 
     public function anyData(Request $request)
     {
+        $month = $request->bulan;
+        $year = $request->tahun;
+        $start = $year . '-' . ($month) . '-21';
+        $end = $year . '-' . ($month + 1) . '-20';
         if (Auth::user()->can('CRUD SPJ')) {
             if ($request->bulan == 0 && $request->tahun == 0) {
                 $query = $this->model::with('uraian')
                     ->where('bidang_id', Auth::user()->role_id);
             } else {
                 $query = $this->model::with('uraian')
-                    ->whereMonth('created_at', $request->bulan)
-                    ->whereYear('created_at', $request->tahun)
+                    ->whereBetween('created_at', [$start, $end])
                     ->where('bidang_id', Auth::user()->role_id);
             }
 
@@ -131,8 +134,7 @@ class SpjController extends Controller
                 $query = $this->model::with('uraian');
             } else {
                 $query = $this->model::with('uraian')
-                    ->whereMonth('created_at', $request->bulan)
-                    ->whereYear('created_at', $request->tahun);
+                    ->whereBetween('created_at', [$start, $end]);
             }
 
         }
