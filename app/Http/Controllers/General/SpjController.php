@@ -70,16 +70,14 @@ class SpjController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = Uraian::where('kode_rek', $request->uraian_id)->first()->saving;
-        if ($data - $request->jumlah < 0) {
-            return redirect()->back()->with('error', 'Anggaran tidak mencukupi!');
+        if ($request->uraian_id != "") {
+            $data = Uraian::where('kode_rek', $request->uraian_id)->first()->saving;
+            if ($data - $request->jumlah < 0) {
+                return redirect()->back()->with('error', 'Anggaran tidak mencukupi!');
+            }
         }
         $data = $this->model::findOrFail($id);
         $data->update($request->all());
-        $link = "";
-        foreach ($data->document as $doc) {
-            $link .= "\r\n" . $_SERVER['SERVER_ADDR'];
-        }
         $notif = User::findOrFail($data->pptk_id);
         if ($data->status == 4) {
             $notif->notify(new TelegramNotification([
