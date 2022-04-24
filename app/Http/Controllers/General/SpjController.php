@@ -260,19 +260,26 @@ class SpjController extends Controller
 
     public function moredata(Request $request)
     {
+        $month = date('m');
+        $start = date('Y') . '-' . ($month) . '-21';
+        $end = date('Y') . '-' . ($month + 1) . '-20';
         if (Auth::user()->can('CRUD SPJ')) {
             if ($request->status == 1)
                 $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id)
+                    ->whereBetween('created_at', [$start, $end])->get()
                     ->where('status', '<=', 3);
             elseif ($request->status == 2) {
                 $query = $this->model::with('uraian')->where('bidang_id', Auth::user()->role_id)
+                    ->whereBetween('created_at', [$start, $end])->get()
                     ->where('status', 4);
             }
         } else {
             if ($request->status == 1)
-                $query = $this->model::with('uraian')->where('status', '<=', 3);
+                $query = $this->model::with('uraian')->where('status', '<=', 3)
+                    ->whereBetween('created_at', [$start, $end])->get();
             elseif ($request->status == 2) {
-                $query = $this->model::with('uraian')->where('status', 4);
+                $query = $this->model::with('uraian')->where('status', 4)
+                    ->whereBetween('created_at', [$start, $end])->get();
             }
 
         }
