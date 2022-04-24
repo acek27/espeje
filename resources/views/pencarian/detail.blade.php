@@ -46,62 +46,64 @@
                 </div>
 
             </div>
-            @foreach($data->spj as $datum)
-                <div class="post">
-                    <div class="user-block">
-                        <a href="#"
-                           class="text-bold"># {{\Carbon\Carbon::parse($datum->created_at)->isoFormat('D MMMM Y')}}</a>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p class="text-muted text-bold mb-0">PPTK</p>
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td style="width:50%">Nama</td>
-                                    <td>{{$datum->pptk->name}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Kontak</td>
-                                    <td>: {{$datum->pptk->hp}}</td>
-                                </tr>
-                                <tr>
-                                    <td>Bidang</td>
-                                    <td>: <strong>
-                                            @if($datum->bidang_id == 1)
-                                                Tata Usaha
-                                            @elseif($datum->bidang_id == 2)
-                                                Rumah Tangga
-                                            @elseif($datum->bidang_id == 3)
-                                                Perlengkapan
-                                            @endif
-                                        </strong></td>
-                                </tr>
-                                </tbody>
-                            </table>
+            @cannot('CRUD SPJ')
+                @foreach($data->spj as $datum)
+                    <div class="post">
+                        <div class="user-block">
+                            <a href="#"
+                               class="text-bold"># {{\Carbon\Carbon::parse($datum->created_at)->isoFormat('D MMMM Y')}}</a>
                         </div>
-                        <div class="col-md-6">
-                        <p class="text-muted text-bold mb-0">Rincian SPJ</p>
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td style="width:50%">Pengajuan SPJ</td>
-                                <td>: Rp. {{number_format($datum->jumlah,'0',',','.')}}</td>
-                            </tr>
-                            <tr>
-                                <td>Jenis SPJ</td>
-                                <td>: <strong>{{$datum->jenis}}</strong></td>
-                            </tr>
-                            <tr>
-                                <td>Tahapan Pengajuan</td>
-                                <td>: <strong>{{$datum->state}}</strong></td>
-                            </tr>
-                            </tbody>
-                        </table>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-muted text-bold mb-0">PPTK</p>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td style="width:50%">Nama</td>
+                                        <td>{{$datum->pptk->name}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kontak</td>
+                                        <td>: {{$datum->pptk->hp}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bidang</td>
+                                        <td>: <strong>
+                                                @if($datum->bidang_id == 1)
+                                                    Tata Usaha
+                                                @elseif($datum->bidang_id == 2)
+                                                    Rumah Tangga
+                                                @elseif($datum->bidang_id == 3)
+                                                    Perlengkapan
+                                                @endif
+                                            </strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="text-muted text-bold mb-0">Rincian SPJ</p>
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td style="width:50%">Pengajuan SPJ</td>
+                                        <td>: Rp. {{number_format($datum->jumlah,'0',',','.')}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jenis SPJ</td>
+                                        <td>: <strong>{{$datum->jenis}}</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Tahapan Pengajuan</td>
+                                        <td>: <strong>{{$datum->state}}</strong></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
+                @endforeach
+            @endcannot
         </div>
 
     </div>

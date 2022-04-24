@@ -119,7 +119,7 @@
         <div class="card-body">
             @php($bulan=['Januari', 'Februari', 'Maret', 'April','Mei',
                          'Juni', 'Juli','Agustus','September','Oktober','November','Desember'])
-            <form class="form-group" action="" method="post">
+            <form class="form-group filter" action="" method="post">
                 <div class="row mb-3">
                     @csrf
                     <div class="col-3">
@@ -216,7 +216,7 @@
                 dt.ajax.reload();
             });
 
-            $("form ").submit(function (event) {
+            $(".filter").submit(function (event) {
                 var bulan = $("#bulan").val();
                 var tahun = $("#tahun").val();
                 dt.ajax.url('{{route('spj.data')}}?bulan=' + bulan + '&tahun=' + tahun).load();
