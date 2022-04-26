@@ -36,6 +36,9 @@ class SpjController extends Controller
         if (Auth::user()->can('CRUD SPJ')) {
             $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
 //            $data = $this->model::where('bidang_id', Auth::user()->role_id)->whereBetween('created_at', [$start, $end])->get();
+        } elseif (Auth::user()->can('Validasi Lanjutan')) {
+            $data = $this->model::whereBetween('created_at', [$start, $end])->get();
+            return view('general.lsgu.index', compact('data'));
         } else {
             $data = $this->model::whereBetween('created_at', [$start, $end])->get();
 
